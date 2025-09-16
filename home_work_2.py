@@ -56,13 +56,21 @@ NM_TO_KM = 1.852 # from Google
 KTS_TO_KMH = NM_TO_KM # same
 # ---------------- Input ----------------
 
-distance_nm = input("distance in nm (nautical miles)")
-stw_kt = input("yacht speed in knots (speed through water, STW)")
-current_kt = input("current in knots")
-angle_degrees_yacht = input("current angle in degrees (for Scenario C)")
-burn_lph = input("fuel consumption in liters per hour")
-if not distance_nm and stw_kt and current_kt and angle_degrees_yacht and burn_lph:
+distance_nm_i = input("distance in nm (nautical miles)")
+stw_kt_i = input("yacht speed in knots (speed through water, STW)")
+current_kt_i = input("current in knots")
+angle_degrees_yacht_i = input("current angle in degrees (for Scenario C)")
+burn_lph_i = input("fuel consumption in liters per hour")
+if not distance_nm_i and stw_kt_i and current_kt_i and angle_degrees_yacht_i and burn_lph_i:
     print("Використано звичайну відстань")
+else:
+    print("задано ввідні данні")
+    distance_nm = distance_nm_i
+    stw_kt = stw_kt_i
+    current_kt = current_kt_i
+    angle_degrees_yacht = angle_degrees_yacht_i
+    burn_lph = burn_lph_i
+
 # =========================
 # Scenario A — no current
 # =========================
@@ -91,6 +99,8 @@ time_A_hours = round(time_A)
 time_A_min = (time_A-time_A_hours)*60 # отримав дріб, перевів в хвилини
 
 Fuel_A = time_A*burn_lph
+
+
 # =========================
 # Scenario B1 — opposing current
 # =========================
@@ -160,12 +170,15 @@ time_C_min = (time_C-time_C_hours)*60 # отримав дріб, перевів 
 Fuel_C = time_C*burn_lph
 # -------------type length----------------
 distance_len = len("|  Distance (km) ")
-distance_max = len(str((max(distance_km, distance_km_B1, distance_km_B2, distance_km_C)))) # не знайшов цієї функції в книзі,
-# пробував методом перебору через math. - але не було. з типом float
+distance_max = len(str((max(distance_km, distance_km_B1, distance_km_B2, distance_km_C))))
+distance_max_1 = int(distance_max)
+# не знайшов цієї функції в книзі,
+# пробував методом перебору через math. - але не було. з типом float не працювало,
+# поміняв на str (все одно потрібна довжина)
 
 # ---------------------------
 # Table output (no loops)
 # ---------------------------
 
 # Буду використовувати len() для надання таблиці презентабельного вигляду
-print(f"""{distance_max} {distance_km}""")
+print(f"""{distance_max_1} {distance_km}""")
