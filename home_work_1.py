@@ -54,7 +54,7 @@ fuel_gph_typhoon = 2300
 # YOUR CODE
 # 5
 q = input("Введіть вашу дистанцію в милях (якщо бажаєте використати класичну - натисніть Enter): ")
-if q == "":
+if not q:
     print("Використано звичайну відстань")
 else: distance_miles=int(q)
 
