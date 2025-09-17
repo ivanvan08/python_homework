@@ -19,7 +19,7 @@ Compute for each scenario (A, B1, B2, C):
 
 OUTPUT EXAMPLE:
 +-----------+----------------+------------------+--------------------+--------------+------------+------------+
-| Scenario  |  Distance (km) |   Current (km/h) |   Current (km/h) |     Time (h) |  Time H:MM |   Fuel (L) |
+| Scenario  |  Distance (km) |   Current (km/h) |   Current (km/h)   |     Time (h) |  Time H:MM |   Fuel (L) |
 +-----------+----------------+------------------+--------------------+--------------+------------+------------+
 | A         |          22.96 |             0.00 |              11.48 |        2.000 | 02:00      |       4.80 |
 | B1        |          22.96 |            -1.48 |              10.00 |        2.296 | 02:18      |       5.51 |
@@ -193,9 +193,30 @@ time_C_min = (time_C-time_C_hours)*60 # отримав дріб, перевів 
 
 Fuel_C = time_C*burn_lph
 # -------------type length----------------
-distance_len = len("|  Distance (km) ")
-distance_max = len(str((max(distance_km, distance_km_B1, distance_km_B2, distance_km_C))))
-distance_max_1 = int(distance_max)
+distance_len = len("|  Distance (km) ") # довжинна верхнього рядку таблиці
+distance_max = len(str((max(distance_km, distance_km_B1, distance_km_B2, distance_km_C, distance_len)))) # довжина числа довжини
+distance_max_1 = int(distance_max) # переведення довжини в чисельне значення
+
+current_len = len("|   Current (km/h)   ") # first current
+current_max = len(str((max(current_km, current_km_B1, current_km_B2, current_mag_km_C+angle_deg_C, current_len))))
+current_max_1 = int(current_max)
+
+stw_len = len("|   Current (km/h) ") # second current
+stw_max = len(str((max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, stw_len))))
+stw_max_1 = int(stw_max)
+
+time_len = len("|     Time (h) ")
+time_max = len(str((max(time_A, time_B1, time_B2, time_C, time_len))))
+time_max_1 = int(time_max)
+
+time_HM_len = len("|  Time H:MM ")
+time_HM_max = len(str((max(time_A_hours+time_A_min, time_B1_hours+time_B1_min, time_B2_hours+time_B2_min,
+                           time_C_hours+time_C_min, time_HM_len))))
+time_HM_max_1 = int(time_HM_max+1) # + 1 бо ще знак : розділяючий години та хвилини
+
+Fuel_len = len("|   Fuel (L) |")
+Fuel_max = len(str((max(Fuel_A, Fuel_B1, Fuel_B2, Fuel_C, Fuel_len))))
+Fuel_max_1 = int(Fuel_max)
 # не знайшов цієї функції в книзі,
 # пробував методом перебору через math. - але не було. з типом float не працювало,
 # поміняв на str (все одно потрібна довжина)
