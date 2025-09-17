@@ -61,40 +61,47 @@ stw_kt_i = input("yacht speed in knots (speed through water, STW)")
 current_kt_i = input("current in knots")
 angle_degrees_yacht = input("current angle in degrees (for Scenario C)")
 burn_lph_i = input("fuel consumption in liters per hour")
-if not distance_nm_i or stw_kt_i or current_kt_i or angle_degrees_yacht or burn_lph_i:
+index_1 = 0 # задаю зачення індексу кожної змінної бо якщо його не буде при використанні звичайної відстані буде помилка
+index_2 = 0
+index_3 = 0
+index_4 = 0
+index_5 = 0
+if not distance_nm_i:
     print("Використано звичайну відстань")
 else:
     print("задано ввідні данні")
-    index = 1
+    index_1 = 1
+
+
 
 if not stw_kt_i:
     print("Використано звичайну швидкість")
 else:
     print("задано ввідні данні")
-    index = 2
+    index_2 = 1
 
 if not current_kt_i:
     print("Використано звичайну швидкість потоку")
 else:
     print("задано ввідні данні")
-    index = 3
+    index_3 = 1
 
 if not burn_lph_i:
     print("Використано звичайну швидкість спалення топлива")
 else:
     print("задано ввідні данні")
-    index = 4
+    index_4 = 1
 
 # =========================
 # Scenario A — no current
 # =========================
 distance_nm = 12.4
-if index == 1:
+if index_1 == 1:
     distance_nm = float(distance_nm_i)
 distance_km = distance_nm*NM_TO_KM
 
 stw_kt = 6.2
-if index == 2:
+if index_2 == 1:
     stw_kt = float(stw_kt_i)
 
 
@@ -102,12 +109,12 @@ stw_km = stw_kt*KTS_TO_KMH
 
 
 current_kt = 0.0  # no current per description
-if index == 3:
+if index_3 == 1:
     current_kt = float(current_kt_i)
 current_km = current_kt*KTS_TO_KMH
 
 burn_lph = 2.4
-if index == 4:
+if index_4 == 1:
     burn_lph = float(burn_lph_i)
 
 if current_km >= 0: # для наочності
@@ -193,30 +200,33 @@ time_C_min = (time_C-time_C_hours)*60 # отримав дріб, перевів 
 
 Fuel_C = time_C*burn_lph
 # -------------type length----------------
+scenario_len = len("| Scenario  ")+1
 distance_len = len("|  Distance (km) ") # довжинна верхнього рядку таблиці
 distance_max = len(str((max(distance_km, distance_km_B1, distance_km_B2, distance_km_C, distance_len)))) # довжина числа довжини
-distance_max_1 = int(distance_max) # переведення довжини в чисельне значення
+distance_max_1 = int(distance_max+1) # переведення довжини в чисельне значення
 
 current_len = len("|   Current (km/h)   ") # first current
-current_max = len(str((max(current_km, current_km_B1, current_km_B2, current_mag_km_C+angle_deg_C, current_len))))
-current_max_1 = int(current_max)
+current_max = len(str((max(current_km, current_km_B1, current_km_B2, current_mag_km_C+int(angle_deg_C), current_len))))
+current_max_1 = int(current_max+1)
 
 stw_len = len("|   Current (km/h) ") # second current
+stw_check = max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, stw_len)
 stw_max = len(str((max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, stw_len))))
-stw_max_1 = int(stw_max)
+stw_max_1 = int(stw_max+1)
 
 time_len = len("|     Time (h) ")
 time_max = len(str((max(time_A, time_B1, time_B2, time_C, time_len))))
-time_max_1 = int(time_max)
+time_max_1 = int(time_max+1)
 
 time_HM_len = len("|  Time H:MM ")
-time_HM_max = len(str((max(time_A_hours+time_A_min, time_B1_hours+time_B1_min, time_B2_hours+time_B2_min,
-                           time_C_hours+time_C_min, time_HM_len))))
-time_HM_max_1 = int(time_HM_max+1) # + 1 бо ще знак : розділяючий години та хвилини
-
+time_HM_max = max((len(str(time_A_hours))+len(str(time_A_min)), len(str(time_B1_hours))+len(str(time_B1_min)),
+len(str(time_B2_hours))+len(str(time_B2_min)), len(str(time_C_hours))+len(str(time_C_min)), time_HM_len)) # додаю len ба при додаванні значень,
+# а не довжин код працює не вірно
+time_HM_max_1 = int(time_HM_max)+2 # + ще 1 бо є знак ":" розділяючий години та хвилини
+ 
 Fuel_len = len("|   Fuel (L) |")
 Fuel_max = len(str((max(Fuel_A, Fuel_B1, Fuel_B2, Fuel_C, Fuel_len))))
-Fuel_max_1 = int(Fuel_max)
+Fuel_max_1 = int(Fuel_max+1)
 # не знайшов цієї функції в книзі,
 # пробував методом перебору через math. - але не було. з типом float не працювало,
 # поміняв на str (все одно потрібна довжина)
@@ -226,4 +236,6 @@ Fuel_max_1 = int(Fuel_max)
 # ---------------------------
 
 # Буду використовувати len() для надання таблиці презентабельного вигляду
-print(f"""{distance_max_1} {distance_km}""")
+frame = 1
+print(f"""+{'-' * scenario_len}+{'-' * distance_max_1}+{'-' * current_max_1}+{'-' * stw_max_1}+{'-' * time_max_1}+{'-' * time_HM_max_1}+{'-' * Fuel_max_1}+""")
+print(distance_km_C, current_mag_km_C, stw_km_C, "time=",time_C, "hm=",time_HM_max, Fuel_C)
