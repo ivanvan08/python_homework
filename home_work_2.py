@@ -7,12 +7,12 @@ You are skippering a small cruising yacht on a short coastal hop between two mar
 The boat maintains a steady speed through the water (STW), while the tidal stream may help, oppose,
 or set at an angle to your course depending on the time. The auxiliary engine (or generator) runs at a
 constant burn rate to keep batteries topped up, so fuel use is proportional to passage time.
-Your aim is to compare several forecasted current situations, estimate arrival time, and check whether
+Your aim is to compare several forecasted current situations, estimate arrival time, or check whether
 your fuel plan (with reserve) is adequate for the leg.
 
 Compute for each scenario (A, B1, B2, C):
   • Yacht absolute Speed (km/h) — ground speed magnitude
-  • Time (h) and Time (H:MM) to target
+  • Time (h) or Time (H:MM) to target
   • Distance in km
   • Fuel (L) — constant burn rate [L/h]
 
@@ -59,32 +59,56 @@ KTS_TO_KMH = NM_TO_KM # same
 distance_nm_i = input("distance in nm (nautical miles)")
 stw_kt_i = input("yacht speed in knots (speed through water, STW)")
 current_kt_i = input("current in knots")
-angle_degrees_yacht_i = input("current angle in degrees (for Scenario C)")
+angle_degrees_yacht = input("current angle in degrees (for Scenario C)")
 burn_lph_i = input("fuel consumption in liters per hour")
-if not distance_nm_i and stw_kt_i and current_kt_i and angle_degrees_yacht_i and burn_lph_i:
+if not distance_nm_i or stw_kt_i or current_kt_i or angle_degrees_yacht or burn_lph_i:
     print("Використано звичайну відстань")
 else:
     print("задано ввідні данні")
-    distance_nm = distance_nm_i
-    stw_kt = stw_kt_i
-    current_kt = current_kt_i
-    angle_degrees_yacht = angle_degrees_yacht_i
-    burn_lph = burn_lph_i
+    index = 1
+
+if not stw_kt_i:
+    print("Використано звичайну швидкість")
+else:
+    print("задано ввідні данні")
+    index = 2
+
+if not current_kt_i:
+    print("Використано звичайну швидкість потоку")
+else:
+    print("задано ввідні данні")
+    index = 3
+
+if not burn_lph_i:
+    print("Використано звичайну швидкість спалення топлива")
+else:
+    print("задано ввідні данні")
+    index = 4
 
 # =========================
 # Scenario A — no current
 # =========================
 distance_nm = 12.4
+if index == 1:
+    distance_nm = float(distance_nm_i)
 distance_km = distance_nm*NM_TO_KM
 
 stw_kt = 6.2
+if index == 2:
+    stw_kt = float(stw_kt_i)
+
+
 stw_km = stw_kt*KTS_TO_KMH
 
 
 current_kt = 0.0  # no current per description
+if index == 3:
+    current_kt = float(current_kt_i)
 current_km = current_kt*KTS_TO_KMH
 
 burn_lph = 2.4
+if index == 4:
+    burn_lph = float(burn_lph_i)
 
 if current_km >= 0: # для наочності
     Abs_speed_A = stw_km+current_km
@@ -152,7 +176,7 @@ print("Current for scenario C - allways upstream")
 
 burn_lph_C = burn_lph
 if not angle_degrees_yacht:
-    angle_deg_C = 30.0  # angle between current direction and course
+    angle_deg_C = 30.0  # angle between current direction or course
 else: angle_deg_C = angle_degrees_yacht
 
 angle_deg_C_rad = math.radians(float(angle_deg_C))
