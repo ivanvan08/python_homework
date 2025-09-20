@@ -196,7 +196,7 @@ if time_B2_min == 60:
     time_B2_min = 0
 
 
-Fuel_B2 = time_B1*burn_lph
+Fuel_B2 = time_B2*burn_lph
 # ============================================
 # Scenario C — angled current (2D vector sum)
 # ============================================
@@ -316,5 +316,3 @@ print(
     f"|  {'Time H:MM':^{time_HM_max_1-2}} "
     f"|   {'Fuel (L)':^{Fuel_max_1-2}} |"
 )
-
-
