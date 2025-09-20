@@ -308,11 +308,11 @@ Fuel_max_1 = int(Fuel_max + 1)
 frame = 1
 print(f"""+{'-' * scenario_len}+{'-' * distance_max_1}+{'-' * current_max_1}+{'-' * stw_max_1}+{'-' * time_max_1}+{'-' * time_HM_max_1}+{'-' * Fuel_max_1}+""")
 print(
-    f"| {'Scenario':^{scenario_len-2}}  " # all in default, but -2 cause i puted spaces by my own
-    f"|  {'Distance (km)':^{distance_max_1-2}} "
-    f"|   {'Current (km/h)':^{current_max_1-2}} "
-    f"|   {'Current (km/h)':^{stw_max_1-2}}   "
-    f"|     {'Time (h)':^{time_max_1-2}} "
-    f"|  {'Time H:MM':^{time_HM_max_1-2}} "
-    f"|   {'Fuel (L)':^{Fuel_max_1-2}} |"
+    f"| {'Scenario':^{scenario_len-2}} " # all in default, but -2 cause i puted spaces by my own
+    f"| {'Distance (km)':^{distance_max_1-2}} " # normal table look was returned by del spaces...
+    f"| {'Current (km/h)':^{current_max_1-2}} "
+    f"| {'Current (km/h)':^{stw_max_1-2}} "
+    f"| {'Time (h)':^{time_max_1-2}} "
+    f"| {'Time H:MM':^{time_HM_max_1-2}} "
+    f"| {'Fuel (L)':^{Fuel_max_1-2}} |"
 )
