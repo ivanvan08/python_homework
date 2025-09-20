@@ -214,6 +214,8 @@ angle_deg_C_rad = math.radians(float(angle_deg_C))
 current_along = current_mag_km_C * math.cos(angle_deg_C_rad)
 current_across = current_mag_km_C * math.sin(angle_deg_C_rad)
 
+current_with_angle = f"{current_mag_km_C:.2f} ({float(angle_deg_C):.1f}°)"
+
 gx = stw_km_C + current_along
 gy = current_across
 Speed_over_ground = math.hypot(gx, gy)
@@ -248,7 +250,7 @@ current_max = max(
     len(f"{current_km:.2f}"),
     len(f"{current_km_B1:.2f}"),
     len(f"{current_km_B2:.2f}"),
-    len(f"{current_mag_km_C:.2f}"),
+    len(f"{current_with_angle}"),
     len("|   Current (km/h)   ")
 )
 current_max_1 = int(current_max + 1)
@@ -319,19 +321,38 @@ print(
 print(frame)
 print(
     f"| {'A':^{scenario_len-2}} "
-    f"|{distance_km:^{distance_max_1}}"
-    f"|{current_km:^{current_max_1}}"
-    f"|{Abs_speed_A:^{stw_max_1}}"
-    f"|{time_A:^{time_max_1}}"
+    f"|{distance_km:^{distance_max_1}.2f}"
+    f"|{current_km:^{current_max_1}.2f}"
+    f"|{Abs_speed_A:^{stw_max_1}.2f}"
+    f"|{time_A:^{time_max_1}.3f}"
     f"|{hmA:^{time_HM_max_1}}"
-    f"|{Fuel_A:^{Fuel_max_1}}|"
+    f"|{Fuel_A:^{Fuel_max_1}.2f}|"
 )
 print(
     f"| {'B1':^{scenario_len-2}} "
-    f"|{distance_km_B1:^{distance_max_1}}"
-    f"|{current_km_B1:^{current_max_1}}"
-    f"|{Abs_speed_B1:^{stw_max_1}}"
-    f"|{time_B1:^{time_max_1}}"
+    f"|{distance_km_B1:^{distance_max_1}.2f}"
+    f"|{current_km_B1:^{current_max_1}.2f}"
+    f"|{Abs_speed_B1:^{stw_max_1}.2f}"
+    f"|{time_B1:^{time_max_1}.3f}"
     f"|{hmB1:^{time_HM_max_1}}"
-    f"|{Fuel_B1:^{Fuel_max_1}}|"
+    f"|{Fuel_B1:^{Fuel_max_1}.2f}|"
 )
+print(
+    f"| {'B2':^{scenario_len-2}} "
+    f"|{distance_km_B2:^{distance_max_1}.2f}"
+    f"|{current_km_B2:^{current_max_1}.2f}"
+    f"|{Abs_speed_B2:^{stw_max_1}.2f}"
+    f"|{time_B2:^{time_max_1}.3f}"
+    f"|{hmB2:^{time_HM_max_1}}"
+    f"|{Fuel_B2:^{Fuel_max_1}.2f}|"
+)
+print(
+    f"| {'C':^{scenario_len-2}} "
+    f"|{distance_km_C:^{distance_max_1}.2f}"
+    f"|{current_with_angle:^{current_max_1}}" # its str
+    f"|{Speed_over_ground:^{stw_max_1}.2f}"
+    f"|{time_C:^{time_max_1}.3f}"
+    f"|{hmC:^{time_HM_max_1}}"
+    f"|{Fuel_C:^{Fuel_max_1}.2f}|"
+)
+print(frame)
