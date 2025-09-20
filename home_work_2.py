@@ -56,11 +56,11 @@ NM_TO_KM = 1.852 # from Google
 KTS_TO_KMH = NM_TO_KM # same
 # ---------------- Input ----------------
 
-distance_nm_i = input("distance in nm (nautical miles)")
-stw_kt_i = input("yacht speed in knots (speed through water, STW)")
-current_kt_i = input("current in knots")
-angle_degrees_yacht = input("current angle in degrees (for Scenario C)")
-burn_lph_i = input("fuel consumption in liters per hour")
+distance_nm_i = input("distance in nm (nautical miles, no more than 9999)")
+stw_kt_i = input("yacht speed in knots (speed through water, STW, no more than 999)")
+current_kt_i = input("current in knots (no more than 99)")
+angle_degrees_yacht = input("current angle in degrees (for Scenario C), 360 - max")
+burn_lph_i = input("fuel consumption in liters per hour (no more than 9999)")
 index_1 = 0 # задаю зачення індексу кожної змінної бо якщо його не буде при використанні звичайної відстані буде помилка
 index_2 = 0
 index_3 = 0
@@ -126,6 +126,9 @@ elif current_km < 0:
 
 
 time_A = distance_km/Abs_speed_A
+if time_A > 9999.99:   # технічна межа, вимушено через зїзд таблички
+        print("Занадто великий час, обмежую до 9999")
+        time_A = 9999
 time_A_hours = int(time_A)
 time_A_min = (time_A-time_A_hours)*60 # отримав дріб, перевів в хвилини
 
@@ -154,6 +157,9 @@ elif current_km < 0:
 
 
 time_B1 = distance_km_B1/Abs_speed_B1
+if time_B1 > 9999.99:   # технічна межа
+        print("Занадто великий час, обмежую до 9999")
+        time_B1 = 9999
 time_B1_hours = int(time_B1)
 time_B1_min = (time_B1-time_B1_hours)*60 # отримав дріб, перевів в хвилини
 
@@ -179,6 +185,9 @@ elif current_km < 0:
     print("Current for scenario B2 - adrift")
 
 time_B2 = distance_km_B2/Abs_speed_B2
+if time_B2 > 9999.99:   # технічна межа
+        print("Занадто великий час, обмежую до 9999")
+        time_B2 = 9999
 time_B2_hours = int(time_B2)
 time_B2_min = (time_B2-time_B2_hours)*60 # отримав дріб, перевів в хвилини
 
@@ -210,6 +219,9 @@ gy = current_across
 Speed_over_ground = math.hypot(gx, gy)
 
 time_C = distance_km_C/Speed_over_ground
+if time_C > 9999.99:   # технічна межа
+        print("Занадто великий час, обмежую до 9999")
+        time_C = 9999
 time_C_hours = int(time_C)
 time_C_min = (time_C-time_C_hours)*60 # отримав дріб, перевів в хвилини
 
@@ -219,35 +231,75 @@ if time_C_min == 60:
 
 Fuel_C = time_C*burn_lph
 # -------------type length----------------
-scenario_len = len("| Scenario  ")+1
+scenario_len = len("| Scenario  ") + 1
+
 # довжинни верхнього рядку таблиці
-distance_max = len(str((max(distance_km, distance_km_B1, distance_km_B2, distance_km_C, len("|  Distance (km) "))))) # довжина числа довжини
-distance_max_1 = int(distance_max+1) # переведення довжини в чисельне значення
+distance_max = max(
+    len(f"{distance_km:.2f}"),
+    len(f"{distance_km_B1:.2f}"),
+    len(f"{distance_km_B2:.2f}"),
+    len(f"{distance_km_C:.2f}"),
+    len("|  Distance (km) ")
+)
+distance_max_1 = int(distance_max + 1) # переведення довжини в чисельне значення
 
 # first current
-current_max = len(str((max(current_km, current_km_B1, current_km_B2, current_mag_km_C+int(angle_deg_C),
-                           len("|   Current (km/h)   ")))))
-current_max_1 = int(current_max+1)
+current_max = max(
+    len(f"{current_km:.2f}"),
+    len(f"{current_km_B1:.2f}"),
+    len(f"{current_km_B2:.2f}"),
+    len(f"{current_mag_km_C:.2f}"),
+    len("|   Current (km/h)   ")
+)
+current_max_1 = int(current_max + 1)
 
 # second current
-stw_check = max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, len("|   Current (km/h) "))
-stw_max = len(str((max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, len("|   Current (km/h) ")))))
-stw_max_1 = int(stw_max+1)
+# зберігаємо ім'я stw_check, але обчислюємо через len форматованих рядків
+stw_check = max(
+    len(f"{stw_km:.2f}"),
+    len(f"{stw_km_B1:.2f}"),
+    len(f"{stw_km_B2:.2f}"),
+    len(f"{stw_km_C:.2f}"),
+    len("|   Current (km/h) ")
+)
+stw_max = stw_check
+stw_max_1 = int(stw_max + 1)
 
-time_max = max(len(str(time_A)), len(str(time_B1)), len(str(time_B2)), len(str(time_C)), len("|     Time (h) "))
+time_max = max(
+    len(f"{time_A:.3f}"),
+    len(f"{time_B1:.3f}"),
+    len(f"{time_B2:.3f}"),
+    len(f"{time_C:.3f}"),
+    len("|     Time (h) ")
+)
 time_max_1 = time_max + 1
 
-time_HM_max = max((len(str(time_A_hours))+len(str(time_A_min)), len(str(time_B1_hours))+len(str(time_B1_min)),
-len(str(time_B2_hours))+len(str(time_B2_min)), len(str(time_C_hours))+len(str(time_C_min)), len("|  Time H:MM "))) # додаю len ба при додаванні значень,
-# а не довжин код працює не вірно
-time_HM_max_1 = int(time_HM_max)+2 # + ще 1 бо є знак ":" розділяючий години та хвилини
+time_HM_max = None
+# Time H:MM — формуємо реальні рядки H:MM та вимірюємо їх довжину. Def був зроблений за допомогою GPT,
+# я заплутався в моменті як проставили return і він мені допоміг
+def hm_str(hours, minutes):
+    m = int(round(minutes))
+    if m == 60:
+        hours = int(hours) + 1
+        m = 0
+    return f"{int(hours):02d}:{m:02d}"
 
-Fuel_max = len(str((max(Fuel_A, Fuel_B1, Fuel_B2, Fuel_C, len("|   Fuel (L) |")))))
-Fuel_max_1 = int(Fuel_max+1)
-# не знайшов цієї функції в книзі,
-# пробував методом перебору через math. - але не було. з типом float не працювало,
-# поміняв на str (все одно потрібна довжина)
+hmA = hm_str(time_A_hours, time_A_min)
+hmB1 = hm_str(time_B1_hours, time_B1_min)
+hmB2 = hm_str(time_B2_hours, time_B2_min)
+hmC = hm_str(time_C_hours, time_C_min)
+time_HM_max = max(len(hmA), len(hmB1), len(hmB2), len(hmC), len("|  Time H:MM "))
+time_HM_max_1 = int(time_HM_max) + 2 # + ще 1 бо є знак ":" (HM) розділяючий години та хвилини
 
+# Fuel column
+Fuel_max = max(
+    len(f"{Fuel_A:.2f}"),
+    len(f"{Fuel_B1:.2f}"),
+    len(f"{Fuel_B2:.2f}"),
+    len(f"{Fuel_C:.2f}"),
+    len("|   Fuel (L) |")
+)
+Fuel_max_1 = int(Fuel_max + 1)
 # ---------------------------
 # Table output (no loops)
 # ---------------------------
@@ -255,4 +307,14 @@ Fuel_max_1 = int(Fuel_max+1)
 # Буду використовувати len() для надання таблиці презентабельного вигляду
 frame = 1
 print(f"""+{'-' * scenario_len}+{'-' * distance_max_1}+{'-' * current_max_1}+{'-' * stw_max_1}+{'-' * time_max_1}+{'-' * time_HM_max_1}+{'-' * Fuel_max_1}+""")
-print(distance_km_C, current_mag_km_C, stw_km_C, "time=",time_C, time_A, "hm=",time_HM_max, Fuel_C)
+print(
+    f"| {'Scenario':^{scenario_len-2}}  " # all in default, but -2 cause i puted spaces by my own
+    f"|  {'Distance (km)':^{distance_max_1-2}} "
+    f"|   {'Current (km/h)':^{current_max_1-2}} "
+    f"|   {'Current (km/h)':^{stw_max_1-2}}   "
+    f"|     {'Time (h)':^{time_max_1-2}} "
+    f"|  {'Time H:MM':^{time_HM_max_1-2}} "
+    f"|   {'Fuel (L)':^{Fuel_max_1-2}} |"
+)
+
+
