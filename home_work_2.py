@@ -126,8 +126,13 @@ elif current_km < 0:
 
 
 time_A = distance_km/Abs_speed_A
-time_A_hours = round(time_A)
+time_A_hours = int(time_A)
 time_A_min = (time_A-time_A_hours)*60 # отримав дріб, перевів в хвилини
+
+if time_A_min == 60: # про всяк випадок
+    time_A_hours += 1
+    time_A_min = 0
+
 
 Fuel_A = time_A*burn_lph
 
@@ -149,8 +154,13 @@ elif current_km < 0:
 
 
 time_B1 = distance_km_B1/Abs_speed_B1
-time_B1_hours = round(time_B1)
+time_B1_hours = int(time_B1)
 time_B1_min = (time_B1-time_B1_hours)*60 # отримав дріб, перевів в хвилини
+
+if time_B1_min == 60:
+    time_B1_hours += 1
+    time_B1_min = 0
+
 
 Fuel_B1 = time_B1*burn_lph
 # =========================
@@ -169,8 +179,13 @@ elif current_km < 0:
     print("Current for scenario B2 - adrift")
 
 time_B2 = distance_km_B2/Abs_speed_B2
-time_B2_hours = round(time_B2)
+time_B2_hours = int(time_B2)
 time_B2_min = (time_B2-time_B2_hours)*60 # отримав дріб, перевів в хвилини
+
+if time_B2_min == 60:
+    time_B2_hours += 1
+    time_B2_min = 0
+
 
 Fuel_B2 = time_B1*burn_lph
 # ============================================
@@ -195,37 +210,39 @@ gy = current_across
 Speed_over_ground = math.hypot(gx, gy)
 
 time_C = distance_km_C/Speed_over_ground
-time_C_hours = round(time_C)
+time_C_hours = int(time_C)
 time_C_min = (time_C-time_C_hours)*60 # отримав дріб, перевів в хвилини
+
+if time_C_min == 60:
+    time_C_hours += 1
+    time_C_min = 0
 
 Fuel_C = time_C*burn_lph
 # -------------type length----------------
 scenario_len = len("| Scenario  ")+1
-distance_len = len("|  Distance (km) ") # довжинна верхнього рядку таблиці
-distance_max = len(str((max(distance_km, distance_km_B1, distance_km_B2, distance_km_C, distance_len)))) # довжина числа довжини
+# довжинни верхнього рядку таблиці
+distance_max = len(str((max(distance_km, distance_km_B1, distance_km_B2, distance_km_C, len("|  Distance (km) "))))) # довжина числа довжини
 distance_max_1 = int(distance_max+1) # переведення довжини в чисельне значення
 
-current_len = len("|   Current (km/h)   ") # first current
-current_max = len(str((max(current_km, current_km_B1, current_km_B2, current_mag_km_C+int(angle_deg_C), current_len))))
+# first current
+current_max = len(str((max(current_km, current_km_B1, current_km_B2, current_mag_km_C+int(angle_deg_C),
+                           len("|   Current (km/h)   ")))))
 current_max_1 = int(current_max+1)
 
-stw_len = len("|   Current (km/h) ") # second current
-stw_check = max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, stw_len)
-stw_max = len(str((max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, stw_len))))
+# second current
+stw_check = max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, len("|   Current (km/h) "))
+stw_max = len(str((max(stw_km, stw_km_B1, stw_km_B1, stw_km_C, len("|   Current (km/h) ")))))
 stw_max_1 = int(stw_max+1)
 
-time_len = len("|     Time (h) ")
-time_max = len(str((max(time_A, time_B1, time_B2, time_C, time_len))))
-time_max_1 = int(time_max+1)
+time_max = max(len(str(time_A)), len(str(time_B1)), len(str(time_B2)), len(str(time_C)), len("|     Time (h) "))
+time_max_1 = time_max + 1
 
-time_HM_len = len("|  Time H:MM ")
 time_HM_max = max((len(str(time_A_hours))+len(str(time_A_min)), len(str(time_B1_hours))+len(str(time_B1_min)),
-len(str(time_B2_hours))+len(str(time_B2_min)), len(str(time_C_hours))+len(str(time_C_min)), time_HM_len)) # додаю len ба при додаванні значень,
+len(str(time_B2_hours))+len(str(time_B2_min)), len(str(time_C_hours))+len(str(time_C_min)), len("|  Time H:MM "))) # додаю len ба при додаванні значень,
 # а не довжин код працює не вірно
 time_HM_max_1 = int(time_HM_max)+2 # + ще 1 бо є знак ":" розділяючий години та хвилини
- 
-Fuel_len = len("|   Fuel (L) |")
-Fuel_max = len(str((max(Fuel_A, Fuel_B1, Fuel_B2, Fuel_C, Fuel_len))))
+
+Fuel_max = len(str((max(Fuel_A, Fuel_B1, Fuel_B2, Fuel_C, len("|   Fuel (L) |")))))
 Fuel_max_1 = int(Fuel_max+1)
 # не знайшов цієї функції в книзі,
 # пробував методом перебору через math. - але не було. з типом float не працювало,
@@ -238,4 +255,4 @@ Fuel_max_1 = int(Fuel_max+1)
 # Буду використовувати len() для надання таблиці презентабельного вигляду
 frame = 1
 print(f"""+{'-' * scenario_len}+{'-' * distance_max_1}+{'-' * current_max_1}+{'-' * stw_max_1}+{'-' * time_max_1}+{'-' * time_HM_max_1}+{'-' * Fuel_max_1}+""")
-print(distance_km_C, current_mag_km_C, stw_km_C, "time=",time_C, "hm=",time_HM_max, Fuel_C)
+print(distance_km_C, current_mag_km_C, stw_km_C, "time=",time_C, time_A, "hm=",time_HM_max, Fuel_C)
