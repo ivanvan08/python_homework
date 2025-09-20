@@ -305,8 +305,8 @@ Fuel_max_1 = int(Fuel_max + 1)
 # ---------------------------
 
 # Буду використовувати len() для надання таблиці презентабельного вигляду
-frame = 1
-print(f"""+{'-' * scenario_len}+{'-' * distance_max_1}+{'-' * current_max_1}+{'-' * stw_max_1}+{'-' * time_max_1}+{'-' * time_HM_max_1}+{'-' * Fuel_max_1}+""")
+frame = f"""+{'-' * scenario_len}+{'-' * distance_max_1}+{'-' * current_max_1}+{'-' * stw_max_1}+{'-' * time_max_1}+{'-' * time_HM_max_1}+{'-' * Fuel_max_1}+"""
+print(frame)
 print(
     f"| {'Scenario':^{scenario_len-2}} " # all in default, but -2 cause i puted spaces by my own
     f"| {'Distance (km)':^{distance_max_1-2}} " # normal table look was returned by del spaces...
@@ -315,4 +315,23 @@ print(
     f"| {'Time (h)':^{time_max_1-2}} "
     f"| {'Time H:MM':^{time_HM_max_1-2}} "
     f"| {'Fuel (L)':^{Fuel_max_1-2}} |"
+)
+print(frame)
+print(
+    f"| {'A':^{scenario_len-2}} "
+    f"|{distance_km:^{distance_max_1}}"
+    f"|{current_km:^{current_max_1}}"
+    f"|{Abs_speed_A:^{stw_max_1}}"
+    f"|{time_A:^{time_max_1}}"
+    f"|{hmA:^{time_HM_max_1}}"
+    f"|{Fuel_A:^{Fuel_max_1}}|"
+)
+print(
+    f"| {'B1':^{scenario_len-2}} "
+    f"|{distance_km_B1:^{distance_max_1}}"
+    f"|{current_km_B1:^{current_max_1}}"
+    f"|{Abs_speed_B1:^{stw_max_1}}"
+    f"|{time_B1:^{time_max_1}}"
+    f"|{hmB1:^{time_HM_max_1}}"
+    f"|{Fuel_B1:^{Fuel_max_1}}|"
 )
