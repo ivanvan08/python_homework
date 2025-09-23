@@ -1,0 +1,77 @@
+"""
+Advanced Password Quality Meter — Strings Only
+
+GOAL
+----
+Read a username and a password and classify the password.
+
+INPUT with input() function
+-----
+Line 1: username
+Line 2: password
+
+MANDATORY RULES (all must pass or print EXACTLY "REJECT"):
+  R1) length: 10..64 characters inclusive
+  R2) contains at least one digit
+  R3) contains at least one lowercase letter
+  R4) contains at least one uppercase letter
+  R5) contains at least one special from:
+      ! @ # $ % ^ & * ( ) - _ = + [ ] { } ; : , . ? / \\ |
+  R6) no spaces or tabs
+  R7) must start with a LETTER (A–Z or a–z)
+  R8) must NOT contain the username (case-insensitive)
+  R9) must NOT contain the reversed username (case-insensitive)
+  R10) must NOT contain these weak substrings (case-insensitive):
+       "password", "qwerty", "12345", "admin", "god"
+
+CLASSIFICATION (only if all R1..R10 pass):
+  Score the following extras (each +1):
+    E1) ends with a digit OR a special
+    E2) contains BOTH '-' and '_' somewhere
+    E3) contains at least one of '@' or '#'
+    E4) contains at least two categories among {digit, upper, lower, special} at
+        the BEGINNING 4 chars (first four chars contain at least two categories)
+  Total extras: 0..4
+  LABEL:
+    0-1 -> OK
+    2-3 -> STRONG
+    4   -> ELITE
+
+OUTPUT
+------
+If any mandatory rule fails: print 
+  REJECT
+
+Else print
+  RESULT: <OK|STRONG|ELITE> (len=<n>, d=<0/1>, lo=<0/1>, up=<0/1>, sp=<0/1>)
+
+NOTES / HINTS
+-------------
+- You may use: len, in, not in, strip, lower, upper, replace, startswith/endswith,
+  slicing (e.g., s[:4], s[::-1]), comparisons, boolean ops, f-strings.
+"""
+
+username = input("Введіть логін")
+password = input("Введіть пароль")
+
+# -----------------MANDATORY RULES------------------------
+R = 0
+password_len = len(password)
+if password_len >= 10:
+    R = +1
+if password_len <= 64:
+    R = +1
+if password_len < 10:
+    print(f"REJECT error code R1")
+if password_len > 64:
+    print(f"REJECT error code R1")
+
+
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+if set(numbers) in set(password):
+    R = +1
+else: print(f"REJECT error code R2")
+
+
+if
+
