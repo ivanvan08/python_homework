@@ -56,22 +56,22 @@ password = input("Введіть пароль")
 
 # -----------------MANDATORY RULES------------------------
 R = 0
+# R1
 password_len = len(password)
-if password_len >= 10:
+if password_len >= 10 or password_len <= 64:
     R = +1
-if password_len <= 64:
-    R = +1
-if password_len < 10:
     print(f"REJECT error code R1")
-if password_len > 64:
-    print(f"REJECT error code R1")
-
-
+# R2
 numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 if set(numbers) in set(password):
     R = +1
 else: print(f"REJECT error code R2")
 
-
-if
-
+# R3
+if password.islower():
+    R = +1
+else: print(f"REJECT error code R3")
+# R4
+if password.isupper():
+    R = +1
+else: print(f"REJECT error code R4")
