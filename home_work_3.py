@@ -91,6 +91,7 @@ if password[0:1].istitle() and password[0:1].isalpha():
     R = +1
 else: print(f"REJECT error code R7")
 # R8
-if not username in password and not username.isupper() in password and username.islower() in password:
+if not username in password: # можна через перевірку в циклі зробити порівняння декількох символів і тоді навіть схований збіг буде задетекчений, але це не необхідно
     R = +1
 else: print(f"REJECT error code R8")
+# R9
