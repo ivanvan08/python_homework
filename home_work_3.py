@@ -51,8 +51,9 @@ NOTES / HINTS
   slicing (e.g., s[:4], s[::-1]), comparisons, boolean ops, f-strings.
 """
 
-username = input("Введіть логін")
-password = input("Введіть пароль")
+# username = input("Введіть логін")
+# password = input("Введіть пароль")
+password = "wergwe56EFEG"
 
 # -----------------MANDATORY RULES------------------------
 R = 0
@@ -60,18 +61,18 @@ R = 0
 password_len = len(password)
 if password_len >= 10 or password_len <= 64:
     R = +1
-    print(f"REJECT error code R1")
+else: print(f"REJECT error code R1")
 # R2
-numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-if set(numbers) in set(password):
+if any(el.isdigit() for el in password): #el - просто змінна (елемент), щоб через цикл перевіряти чи є цифра в паролі,
+    # в нього записується кожен символ змінної і прирівнюється (чи є він цифрою)
     R = +1
 else: print(f"REJECT error code R2")
 
 # R3
-if password.islower():
+if any(el.islower() for el in password):
     R = +1
 else: print(f"REJECT error code R3")
 # R4
-if password.isupper():
+if any(el.isupper() for el in password):
     R = +1
 else: print(f"REJECT error code R4")
