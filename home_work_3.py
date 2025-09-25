@@ -55,7 +55,7 @@ from re import findall
 # username = input("Введіть логін")
 # password = input("Введіть пароль")
 username = "aer"
-password = "Wergwepassword56EFE$$ "
+password = "Wergweppassword56EFE$$ "
 
 # -----------------MANDATORY RULES------------------------
 R = 0
@@ -100,6 +100,7 @@ if not username[::-1] in password:
     R = +1
 else: print(f"REJECT error code R9")
 # R10
-if not "password" or "qwerty" or "12345" or "admin" or "god" in password:
+ban_word_list = {"password", "qwerty", "12345", "admin", "god"}
+if any(el in password for el in ban_word_list):
     R = +1
 else: print(f"REJECT error code R10")
