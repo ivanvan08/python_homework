@@ -50,11 +50,12 @@ NOTES / HINTS
 - You may use: len, in, not in, strip, lower, upper, replace, startswith/endswith,
   slicing (e.g., s[:4], s[::-1]), comparisons, boolean ops, f-strings.
 """
+from re import findall
 
 # username = input("Введіть логін")
 # password = input("Введіть пароль")
-username = "wer"
-password = "Wergwe56EFE$$ "
+username = "aer"
+password = "Wergwepassword56EFE$$ "
 
 # -----------------MANDATORY RULES------------------------
 R = 0
@@ -95,3 +96,10 @@ if not username in password: # можна через перевірку в ци�
     R = +1
 else: print(f"REJECT error code R8")
 # R9
+if not username[::-1] in password:
+    R = +1
+else: print(f"REJECT error code R9")
+# R10
+if not "password" or "qwerty" or "12345" or "admin" or "god" in password:
+    R = +1
+else: print(f"REJECT error code R10")
