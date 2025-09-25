@@ -53,7 +53,7 @@ NOTES / HINTS
 
 # username = input("Введіть логін")
 # password = input("Введіть пароль")
-password = "wergwe56EFEG"
+password = "wergwe56EFE$$ "
 
 # -----------------MANDATORY RULES------------------------
 R = 0
@@ -76,3 +76,12 @@ else: print(f"REJECT error code R3")
 if any(el.isupper() for el in password):
     R = +1
 else: print(f"REJECT error code R4")
+# R5
+special =("!@#$%^&*()-_=+[]{};:,.?/\\|")# всюди де теоретично може бути знак \ додам r
+if any(el in special for el in password):
+    R = +1
+else: print(f"REJECT error code R5")
+# R6
+if any(el.isspace() for el in password):
+    R = +1
+else: print(f"REJECT error code R6")
