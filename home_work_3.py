@@ -53,6 +53,7 @@ NOTES / HINTS
 
 # username = input("Введіть логін")
 # password = input("Введіть пароль")
+username = "wer"
 password = "Wergwe56EFE$$ "
 
 # -----------------MANDATORY RULES------------------------
@@ -90,3 +91,6 @@ if password[0:1].istitle() and password[0:1].isalpha():
     R = +1
 else: print(f"REJECT error code R7")
 # R8
+if not username in password and not username.isupper() in password and username.islower() in password:
+    R = +1
+else: print(f"REJECT error code R8")
