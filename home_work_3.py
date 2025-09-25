@@ -53,7 +53,7 @@ NOTES / HINTS
 
 # username = input("Введіть логін")
 # password = input("Введіть пароль")
-password = "wergwe56EFE$$ "
+password = "Wergwe56EFE$$ "
 
 # -----------------MANDATORY RULES------------------------
 R = 0
@@ -85,3 +85,8 @@ else: print(f"REJECT error code R5")
 if any(el.isspace() for el in password):
     R = +1
 else: print(f"REJECT error code R6")
+# R7
+if password[0:1].istitle() and password[0:1].isalpha():
+    R = +1
+else: print(f"REJECT error code R7")
+# R8
