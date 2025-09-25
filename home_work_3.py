@@ -55,52 +55,70 @@ from re import findall
 # username = input("Введіть логін")
 # password = input("Введіть пароль")
 username = "aer"
-password = "Wergweppassword56EFE$$ "
+password = "W_ergweppassword5-6EFE$$"
 
 # -----------------MANDATORY RULES------------------------
 R = 0
 # R1
 password_len = len(password)
 if password_len >= 10 or password_len <= 64:
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R1")
 # R2
 if any(el.isdigit() for el in password): #el - просто змінна (елемент), щоб через цикл перевіряти чи є цифра в паролі,
     # в нього записується кожен символ змінної і прирівнюється (чи є він цифрою)
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R2")
-
 # R3
 if any(el.islower() for el in password):
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R3")
 # R4
 if any(el.isupper() for el in password):
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R4")
 # R5
 special =("!@#$%^&*()-_=+[]{};:,.?/\\|")# всюди де теоретично може бути знак \ додам r
 if any(el in special for el in password):
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R5")
 # R6
-if any(el.isspace() for el in password):
-    R = +1
+if not " " in password:
+    R = R+1
 else: print(f"REJECT error code R6")
 # R7
 if password[0:1].istitle() and password[0:1].isalpha():
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R7")
 # R8
 if not username in password: # можна через перевірку в циклі зробити порівняння декількох символів і тоді навіть схований збіг буде задетекчений, але це не необхідно
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R8")
 # R9
 if not username[::-1] in password:
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R9")
 # R10
 ban_word_list = {"password", "qwerty", "12345", "admin", "god"}
 if any(el in password for el in ban_word_list):
-    R = +1
+    R = R+1
 else: print(f"REJECT error code R10")
+# CLASSIFICATION
+print(R)
+if R == 10:
+    print("your password is ok")
+else:   print("you need to change your password")
+E = 0
+# E1
+password_last_symbol = slice(password_len-1, password_len)
+if password[password_last_symbol].isdigit() or any(el in special for el in password[password_last_symbol]):
+    E = +1
+# E2
+if "-" and "_" in password:
+    E = +1
+
+
+
+
+
+print(E)
