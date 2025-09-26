@@ -55,7 +55,7 @@ from re import findall
 # username = input("Введіть логін")
 # password = input("Введіть пароль")
 username = "aer"
-password = "W_ergweppassword5-6EFE$$"
+password = "Wer-_gweppassword56EFE$$"
 
 # -----------------MANDATORY RULES------------------------
 R = 0
@@ -104,7 +104,7 @@ if any(el in password for el in ban_word_list):
     R = R+1
 else: print(f"REJECT error code R10")
 # CLASSIFICATION
-print(R)
+print("R =", R)
 if R == 10:
     print("your password is ok")
 else:   print("you need to change your password")
@@ -114,7 +114,7 @@ password_last_symbol = slice(password_len-1, password_len)
 if password[password_last_symbol].isdigit() or any(el in special for el in password[password_last_symbol]):
     E = E+1
 # E2
-if "-" and "_" in password:
+if "-" in password and "_" in password:
     E = E+1
 
 
