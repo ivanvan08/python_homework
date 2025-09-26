@@ -112,10 +112,10 @@ E = 0
 # E1
 password_last_symbol = slice(password_len-1, password_len)
 if password[password_last_symbol].isdigit() or any(el in special for el in password[password_last_symbol]):
-    E = +1
+    E = E+1
 # E2
 if "-" and "_" in password:
-    E = +1
+    E = E+1
 
 
 
