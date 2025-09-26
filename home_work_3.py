@@ -50,12 +50,9 @@ NOTES / HINTS
 - You may use: len, in, not in, strip, lower, upper, replace, startswith/endswith,
   slicing (e.g., s[:4], s[::-1]), comparisons, boolean ops, f-strings.
 """
-from re import findall
 
-# username = input("Введіть логін")
-# password = input("Введіть пароль")
-username = "aer"
-password = "Wer-_gweppassword56EFE$$"
+username = input("Введіть логін")
+password = input("Введіть пароль")
 
 # -----------------MANDATORY RULES------------------------
 R = 0
@@ -106,8 +103,10 @@ else: print(f"REJECT error code R10")
 # CLASSIFICATION
 print("R =", R)
 if R == 10:
-    print("your password is ok")
-else:   print("you need to change your password")
+    print("you can apply your password")
+else:
+    print("you need to change your password")
+    quit() # вирішив не імпортувати sys
 E = 0
 # E1
 password_last_symbol = slice(password_len-1, password_len)
@@ -116,9 +115,25 @@ if password[password_last_symbol].isdigit() or any(el in special for el in passw
 # E2
 if "-" in password and "_" in password:
     E = E+1
-
-
-
-
-
-print(E)
+# E3
+if "@" in password or "#" in password:
+    E = E+1
+# E4
+trueness = 0
+if any(c.isdigit() for c in password[:4]):
+    trueness = trueness+1
+if any(c.isupper() for c in password[:4]):
+    trueness = trueness + 1
+if any(c.islower() for c in password[:4]):
+    trueness = trueness + 1
+if any(c in special for c in password[:4]):
+    trueness = trueness + 1
+if trueness >=2:
+    E = E+1
+# output
+if E == 0 or E == 1:
+    print("your password is OK")
+if E == 2 or E == 3:
+    print("your password is STRONG")
+if E == 4:
+    print("your password is ELITE")
