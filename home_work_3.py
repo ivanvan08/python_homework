@@ -88,16 +88,16 @@ if password[0:1].istitle() and password[0:1].isalpha():
     R = R+1
 else: print(f"REJECT error code R7")
 # R8
-if not username in password: # можна через перевірку в циклі зробити порівняння декількох символів і тоді навіть схований збіг буде задетекчений, але це не необхідно
+if not username.lower() in password.lower(): # можна через перевірку в циклі зробити порівняння декількох символів і тоді навіть схований збіг буде задетекчений, але це не необхідно
     R = R+1
 else: print(f"REJECT error code R8")
 # R9
-if not username[::-1] in password:
+if not username[::-1].lower() in password.lower():
     R = R+1
 else: print(f"REJECT error code R9")
 # R10
 ban_word_list = {"password", "qwerty", "12345", "admin", "god"}
-if any(el in password for el in ban_word_list):
+if any(el in password.lower() for el in ban_word_list):
     R = R+1
 else: print(f"REJECT error code R10")
 # CLASSIFICATION
