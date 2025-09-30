@@ -32,9 +32,9 @@ print("(Starter) Text:", text)
 # TODO: split, clean punctuation with strip, print "<word> -> <len>"
 words = text.split()
 tuples = []
-for i in range(len(words)):
-     for word in words:
-        print(f"{word.strip(punctuation)} -> {len(word)}")
-        tuples.append(f"({f"{word.strip(punctuation)}, {len(word)}"})")
+for word in words:
+    clean_word = word.strip(punctuation)
+    print(f"{clean_word} -> {len(clean_word)}")
+    tuples.append((clean_word, len(clean_word)))
 # Optional: build a list of tuples (word, length) and print it
 print(tuples)
