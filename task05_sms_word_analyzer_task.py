@@ -25,8 +25,16 @@ Tuples: [('Meeting', 7), ('at', 2), ('10am', 4), ('in', 2), ('Room', 4), ('301',
 """
 
 import string
+from string import punctuation #знайшов поки створював змінну
 
 text = "Meeting at 10am in Room 301. Don’t be late!"
 print("(Starter) Text:", text)
 # TODO: split, clean punctuation with strip, print "<word> -> <len>"
+words = text.split()
+tuples = []
+for i in range(len(words)):
+     for word in words:
+        print(f"{word.strip(punctuation)} -> {len(word)}")
+        tuples.append(f"({f"{word.strip(punctuation)}, {len(word)}"})")
 # Optional: build a list of tuples (word, length) and print it
+print(tuples)
