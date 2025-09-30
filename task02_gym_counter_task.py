@@ -20,4 +20,9 @@ Workout complete!
 target = 12
 print("(Starter) Target:", target)
 # TODO: loop using range function prints "Push-up X done" for X from 1..target
+while target > 0:
+    for i in range(target):
+        print(f"push-up {i+1} done") # +1 бо індексвція починається з 0
+        target = target-1
 # TODO: finish with "Workout complete!"
+print("Workout complete!")
