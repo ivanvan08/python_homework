@@ -20,6 +20,9 @@ if amount == "":
 bills = [100, 50, 20, 10]
 print(f"(Starter) Amount: {amount}, Bills: {bills}")
 # TODO: implement greedy breakdown and print result (or error if remainder)
+if type(int(amount)/10) != int:
+    print("error, your amount not divisible by 10")
+    quit()
 hundred = 0
 fifty = 0
 twent = 0
