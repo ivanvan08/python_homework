@@ -14,7 +14,10 @@ OUTPUT EXAMPLE
 Inventory: [['laptops', 15], ['keyboards', 37], ['mice', 30]]
 keyboards: 40 -> 37
 """
+from re import split
 
 inventory = [["laptops", 15], ["keyboards", 40], ["mice", 30]]
 print("(Starter) Inventory:", inventory)
 # TODO: find "keyboards" row and subtract 3 (min 0), then print before/after
+a = str(inventory).split(",")
+print(a)

@@ -14,7 +14,28 @@ OUTPUT EXAMPLE
 1x100, 1x50, 1x20, 1x10
 """
 
-amount = 180
+amount = input("input your amount")
+if amount == "":
+    amount = 180
 bills = [100, 50, 20, 10]
 print(f"(Starter) Amount: {amount}, Bills: {bills}")
 # TODO: implement greedy breakdown and print result (or error if remainder)
+hundred = 0
+fifty = 0
+twent = 0
+ten = 0
+if amount < bills[-1]: print("Your amount is less than", bills[-1])
+while amount >= bills[0]:
+    hundred = hundred+1
+    amount = amount-bills[0]
+while amount >= bills[1]:
+    fifty = fifty+1
+    amount = amount-bills[1]
+while amount >= bills[2]:
+    twent = twent+1
+    amount = amount-bills[2]
+while amount >= bills[3]:
+    ten = ten+1
+    amount = amount-bills[3]
+
+print(f"{hundred}x100 {fifty}x50 {twent}x20 {ten}x10")
