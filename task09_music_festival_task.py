@@ -44,7 +44,10 @@ Zone counts: A=2, B=2, C=1
 Duplicates: T045
 """
 from operator import index
+from os import remove
 from re import findall
+
+import re
 
 logs = [
     "id:T123 age=21 zoneA",
@@ -58,17 +61,21 @@ logs = [
 print("(Starter) Logs loaded:", len(logs))
 # TODO: parse each line, extract id/age/zone using loops over tokens
 # TODO: compute metrics with lists and counters only (no dicts, no def)
-# for i in logs:
-#     print(i)
-id = ""
+id = []
+id_dup = []
+age = []
 for line in logs:
-    for char in line:
-        if char == "T":
-            id += char
-            nextdig = line.index(char)
-            while line[nextdig].isdigit():
-                nextdig = line.index(char) + 1
-                id += line[nextdig]
+    if re.findall(r"T\d+", line.upper()) != []: #з цифрами (\d) + - одна або більше цифра
+        if re.findall(r"T\d+", line.upper()) in id:
+            id_dup.append(re.findall(r"T\d+", line.upper()))
+        id.append(re.findall(r"T\d+", line.upper()))
+    else: id.append(["None"])
 
+
+    if re.findall(r"age\D*(\d+)", line.lower()) != []: # \D* 0 або більше не цифр, але їх ігноруємо, бо беремо тільки кортеж
+        age.append(re.findall(r"age\D*(\d+)", line.lower()))
+    else: age.append(["None"])
 
 print(id)
+print(id_dup)
+print(age)
