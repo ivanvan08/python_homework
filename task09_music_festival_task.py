@@ -75,7 +75,7 @@ for line in logs:
     else: age.append(["None"])
 
     if re.findall(r"zone\D*(\w+)", line.lower()) != []:  # \D* 0 або більше не цифр, але їх ігноруємо, бо беремо тільки кортеж
-        zone.append(re.findall(r"zone\D*(\w+)", line.lower()))
+        zone.append(re.findall(r"zone\D*(\w+)", line.lower())) # 4 стрічку видає як e, ймовірніше всього через те що [['b']] інтерпретується як ['е'] по ASCII
     else:
         zone.append(["None"])
 
