@@ -43,6 +43,8 @@ Average age: 21.2
 Zone counts: A=2, B=2, C=1
 Duplicates: T045
 """
+from operator import index
+from re import findall
 
 logs = [
     "id:T123 age=21 zoneA",
@@ -56,3 +58,17 @@ logs = [
 print("(Starter) Logs loaded:", len(logs))
 # TODO: parse each line, extract id/age/zone using loops over tokens
 # TODO: compute metrics with lists and counters only (no dicts, no def)
+# for i in logs:
+#     print(i)
+id = ""
+for line in logs:
+    for char in line:
+        if char == "T":
+            id += char
+            nextdig = line.index(char)
+            while line[nextdig].isdigit():
+                nextdig = line.index(char) + 1
+                id += line[nextdig]
+
+
+print(id)
