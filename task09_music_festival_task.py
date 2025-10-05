@@ -62,24 +62,51 @@ id = []
 id_dup = []
 age = []
 zone = []
+zone_count_a = 0
+zone_count_b = 0
+zone_count_c = 0
 for line in logs:
     if re.findall(r"T\d+", line.upper()) != []: #з цифрами (\d) + - одна або більше цифра
         if re.findall(r"T\d+", line.upper()) in id:
             id_dup.append(re.findall(r"T\d+", line.upper()))
         id.append(re.findall(r"T\d+", line.upper()))
-    else: id.append(["None"])
 
 
     if re.findall(r"age\D*(\d+)", line.lower()) != []: # \D* 0 або більше не цифр, але їх ігноруємо, бо беремо тільки кортеж
         age.append(re.findall(r"age\D*(\d+)", line.lower()))
-    else: age.append(["None"])
+
 
     if re.findall(r"zone\D*(\w+)", line.lower()) != []:  # \D* 0 або більше не цифр, але їх ігноруємо, бо беремо тільки кортеж
         zone.append(re.findall(r"zone\D*(\w+)", line.lower())) # 4 стрічку видає як e, ймовірніше всього через те що [['b']] інтерпретується як ['е'] по ASCII
-    else:
-        zone.append(["None"])
+
+Valid_tickets = len(id)
+
+Minors = 0
+for i in age:
+    if int(i[0]) < 18:
+        Minors += 1
+
+avarage = 0
+
+for i in age:
+    avarage += int(i[0])
+
+for i in zone:
+    if 'a' in i:
+        zone_count_a += 1
+    elif 'b' in i:
+        zone_count_b += 1
+    elif 'c' in i:
+        zone_count_c += 1
 
 print(id)
-print(id_dup)
 print(age)
 print(zone)
+
+print(f"""{"-"*35}
+Valid tickets: {Valid_tickets}
+Minors: {Minors}
+Average age: {avarage/len(age)}
+Zone counts: A={zone_count_a}, B={zone_count_b}, C={zone_count_c}
+Duplicates: {id_dup}
+{"-"*35}""")
