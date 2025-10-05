@@ -43,9 +43,6 @@ Average age: 21.2
 Zone counts: A=2, B=2, C=1
 Duplicates: T045
 """
-from operator import index
-from os import remove
-from re import findall
 
 import re
 
@@ -64,6 +61,7 @@ print("(Starter) Logs loaded:", len(logs))
 id = []
 id_dup = []
 age = []
+zone = []
 for line in logs:
     if re.findall(r"T\d+", line.upper()) != []: #з цифрами (\d) + - одна або більше цифра
         if re.findall(r"T\d+", line.upper()) in id:
@@ -76,6 +74,12 @@ for line in logs:
         age.append(re.findall(r"age\D*(\d+)", line.lower()))
     else: age.append(["None"])
 
+    if re.findall(r"zone\D*(\w+)", line.lower()) != []:  # \D* 0 або більше не цифр, але їх ігноруємо, бо беремо тільки кортеж
+        zone.append(re.findall(r"zone\D*(\w+)", line.lower()))
+    else:
+        zone.append(["None"])
+
 print(id)
 print(id_dup)
 print(age)
+print(zone)
