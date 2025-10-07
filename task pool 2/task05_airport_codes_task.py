@@ -12,3 +12,5 @@ Print the city for each flight code; if code not in dict — print "Unknown".
 airports = {"KBP":"Kyiv", "LHR":"London", "JFK":"New York"}
 flights = ["KBP", "JFK", "LHR", "CDG"]
 # TODO: print city for each code using .get
+for i in flights:
+    print(airports.get(i))
