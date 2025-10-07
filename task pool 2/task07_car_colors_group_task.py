@@ -10,3 +10,4 @@ Build a dictionary where key is the brand and value is a list of colors for that
 # Starter:
 cars = [("BMW","black"), ("Audi","red"), ("BMW","white"), ("Audi","blue")]
 # TODO: build brand -> list_of_colors dict and print it
+brand_colors = {}
