@@ -76,7 +76,7 @@ for line in logs:
         age.append(re.findall(r"age\D*(\d+)", line.lower()))
 
 
-    if re.findall(r"zone\D*(\w+)", line.lower()) != []:  # \D* 0 або більше не цифр, але їх ігноруємо, бо беремо тільки кортеж
+    if re.findall(r"zone\D*(\w+)", line.lower()) != []:
         zone.append(re.findall(r"zone\D*(\w+)", line.lower())) # 4 стрічку видає як e, ймовірніше всього через те що [['b']] інтерпретується як ['е'] по ASCII
 
 Valid_tickets = len(id)
