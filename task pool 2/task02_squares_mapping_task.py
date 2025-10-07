@@ -11,3 +11,5 @@ create a dictionary where key is the number and value is its square.
 nums = [1, 2, 3, 4, 5]
 # TODO: create dict of squares; print it
 
+square_dict = {num: num**2 for num in nums}
+print(square_dict)
