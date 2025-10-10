@@ -11,3 +11,10 @@ Build a dictionary where key is the brand and value is a list of colors for that
 cars = [("BMW","black"), ("Audi","red"), ("BMW","white"), ("Audi","blue")]
 # TODO: build brand -> list_of_colors dict and print it
 brand_colors = {}
+for element in cars:
+    for i in element:
+        if i is element[0]:
+            a = i
+        else: b = i
+    brand_colors.update({a: b})
+print(brand_colors)
