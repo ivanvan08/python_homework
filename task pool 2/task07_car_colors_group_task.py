@@ -16,5 +16,8 @@ for element in cars:
         if i is element[0]:
             a = i
         else: b = i
-    brand_colors.update({a: b})
+    if a in brand_colors:
+        c = (b, brand_colors[a])
+        brand_colors.update({a: c})
+    else: brand_colors.update({a: b})
 print(brand_colors)
