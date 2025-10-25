@@ -110,7 +110,7 @@ def mein():
         action_clean = action.strip().lower()
         if "exit" in action_clean:
             break
-        elif action.strip().lower() == "1":
+        elif action_clean == "1":
             menu_show()
             drink_choice = drink_choose()
             if drink_choice.strip().lower() == "exit":
