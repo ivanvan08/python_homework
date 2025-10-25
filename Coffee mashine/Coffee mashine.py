@@ -145,6 +145,8 @@ def drink_choose():
         choose_clean = choose.strip().lower()
         if "exit" in choose_clean:
             return "exit"
+        elif choose_clean == "else":
+            print("Цей функціонал ще не додано")
         elif choose_clean in coffee_recipes:
             print(choose_clean, "є в меню")
             return choose_clean
