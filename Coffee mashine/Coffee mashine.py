@@ -1,8 +1,3 @@
-
-
-
-
-
 coffee_recipes = { # рецепти написані за допомогою ШІ, бо мені ліньки шукати скільки в якому напої міліграм й тд.
     "espresso": {
         "ingredients": {
@@ -112,8 +107,17 @@ ingredient_prices = {
 def mein():
     while True:
         action = hello_and_menu()
-        if "exit" in action.strip().lower():
+        action_clean = action.strip().lower()
+        if "exit" in action_clean:
             break
+        elif action.strip().lower() == "1":
+            menu_show()
+            drink_choice = drink_choose()
+            if drink_choice.strip().lower() == "exit":
+                break
+        else:
+            print("Спробуйте ще")
+
 def price_calculator():
     for drink in coffee_recipes:
         price_per_ingredient = []
@@ -126,13 +130,24 @@ def price_calculator():
         # print(coffee_recipes[drink]["price"])
 def menu_show():
     price_calculator()
+    counter = 0
     print("--- Наше меню ---")
     for drink in coffee_recipes:
-        print(f"{drink} — {int(coffee_recipes[drink]["price"])}грн")
+        counter += 1
+        print(f"{counter}) {drink} — {int(coffee_recipes[drink]["price"])}грн")
 
 def hello_and_menu():
     first_step = input("Вітаю, дякую що вибрали нашу кавомашину. Для перегляду меню введіть 1, для виходу введіть exit ")
-    if first_step.strip() == "1":
-        menu_show()
     return first_step
+def drink_choose():
+    while True:
+        choose = input("Введіть вибраний вами напій, якщо наша вибірка вам не довподоби - введіть else ")
+        choose_clean = choose.strip().lower()
+        if "exit" in choose_clean:
+            return "exit"
+        elif choose_clean in coffee_recipes:
+            print(choose_clean, "є в меню")
+            return choose_clean
+        else:
+            print("цього немає в меню, спробуйте ще")
 mein()
