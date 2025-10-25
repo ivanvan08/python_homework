@@ -105,6 +105,7 @@ ingredient_prices = {
     "sugar": 0.15
 }
 def mein():
+    order_list = []
     while True:
         action = hello_and_menu()
         action_clean = action.strip().lower()
@@ -112,9 +113,18 @@ def mein():
             break
         elif action_clean == "1":
             menu_show()
-            drink_choice = drink_choose()
-            if drink_choice.strip().lower() == "exit":
-                break
+            while True:
+                drink_choice = drink_choose()
+                drink_choice_clean = drink_choice.strip().lower()
+                if drink_choice_clean == "exit":
+                    break
+                elif drink_choice_clean == "finish":
+                    print("Ви закінчили заповнювати замовлення")
+                    print(f"Ось ваше замовлення - {order_list}: {int(calculate_order(order_list))}грн")
+                    break
+                elif drink_choice_clean in coffee_recipes:
+                    order_list.append(drink_choice_clean)
+                    print(f"ось ваше замовлення{order_list}, бажаєте щось ще?")
         else:
             print("Спробуйте ще")
 
@@ -145,6 +155,8 @@ def drink_choose():
         choose_clean = choose.strip().lower()
         if "exit" in choose_clean:
             return "exit"
+        elif "finish" in choose_clean:
+            return "finish"
         elif choose_clean == "else":
             print("Цей функціонал ще не додано")
         elif choose_clean in coffee_recipes:
@@ -152,4 +164,9 @@ def drink_choose():
             return choose_clean
         else:
             print("цього немає в меню, спробуйте ще")
+def calculate_order(orderlist):
+    ordersum = []
+    for option in orderlist:
+        ordersum.append(coffee_recipes[option]["price"])
+    return sum(ordersum)
 mein()
