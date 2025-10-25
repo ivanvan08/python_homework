@@ -1,3 +1,8 @@
+
+
+
+
+
 coffee_recipes = { # рецепти написані за допомогою ШІ, бо мені ліньки шукати скільки в якому напої міліграм й тд.
     "espresso": {
         "ingredients": {
@@ -104,12 +109,30 @@ ingredient_prices = {
     "cream": 0.9,
     "sugar": 0.15
 }
-for drink in coffee_recipes:
-    price_per_ingredient = []
-    ingredients = coffee_recipes[drink]["ingredients"]
-    for ingredient in ingredients:
-        price_per_ingredient.append(ingredients[ingredient] * ingredient_prices.get(ingredient))
-        print(f"напій {drink} інгридієнт {ingredient} кількість {ingredients[ingredient]} ціна {ingredient_prices.get(ingredient)}")
-    total_price = sum(price_per_ingredient)
-    coffee_recipes[drink]["price"]=total_price
-    print(coffee_recipes[drink]["price"])
+def mein():
+    while True:
+        action = hello_and_menu()
+        if "exit" in action.strip().lower():
+            break
+def price_calculator():
+    for drink in coffee_recipes:
+        price_per_ingredient = []
+        ingredients = coffee_recipes[drink]["ingredients"]
+        for ingredient in ingredients:
+            price_per_ingredient.append(ingredients[ingredient] * ingredient_prices.get(ingredient))
+            # print(f"напій {drink} інгредієнт {ingredient} кількість {ingredients[ingredient]} ціна {ingredient_prices.get(ingredient)}")
+        total_price = sum(price_per_ingredient)
+        coffee_recipes[drink]["price"]=total_price
+        # print(coffee_recipes[drink]["price"])
+def menu_show():
+    price_calculator()
+    print("--- Наше меню ---")
+    for drink in coffee_recipes:
+        print(f"{drink} — {int(coffee_recipes[drink]["price"])}грн")
+
+def hello_and_menu():
+    first_step = input("Вітаю, дякую що вибрали нашу кавомашину. Для перегляду меню введіть 1, для виходу введіть exit ")
+    if first_step.strip() == "1":
+        menu_show()
+    return first_step
+mein()
