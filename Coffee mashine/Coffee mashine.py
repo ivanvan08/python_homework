@@ -105,12 +105,11 @@ ingredient_prices = {
     "sugar": 0.15
 }
 for drink in coffee_recipes:
-    total_price = 0
+    price_per_ingredient = []
     ingredients = coffee_recipes[drink]["ingredients"]
-    sumprice = []
     for ingredient in ingredients:
-        price_per_ingredient = ingredients[ingredient] * ingredient_prices.get(ingredient)
+        price_per_ingredient.append(ingredients[ingredient] * ingredient_prices.get(ingredient))
         print(f"напій {drink} інгридієнт {ingredient} кількість {ingredients[ingredient]} ціна {ingredient_prices.get(ingredient)}")
-        sumprice.append(price_per_ingredient)
-    total_price = sum(sumprice)
-    print(total_price)
+    total_price = sum(price_per_ingredient)
+    coffee_recipes[drink]["price"]=total_price
+    print(coffee_recipes[drink]["price"])
