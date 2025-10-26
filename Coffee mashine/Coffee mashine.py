@@ -146,7 +146,7 @@ def mein():
                         return
                     order_list.append({"drink": drink_choice_clean, "extras": extras})
                     if extras:
-                        print(f"✅ Додано: {drink_choice_clean} + {', '.join(extras)}")
+                        print(f"Додано: {drink_choice_clean} + {', '.join(extras)}")
                     else:
                         print("без додатків до замовлення")
                 else:
@@ -177,7 +177,7 @@ def hello_and_menu():
     return first_step
 def drink_choose():
     while True:
-        choose = input("Введіть вибраний вами напій, якщо наша вибірка вам не довподоби - введіть else ")
+        choose = input("Введіть вибраний вами напій, якщо наша вибірка вам не довподоби - введіть else. Щоб закінчити введіть finish ")
         choose_clean = choose.strip().lower()
         if "exit" in choose_clean:
             return "exit"
@@ -191,21 +191,26 @@ def drink_choose():
         else:
             print("цього немає в меню, спробуйте ще")
 def calculate_order(orderlist):
-    ordersum = []
-    for option in orderlist:
-        ordersum.append(coffee_recipes[option]["price"])
-    return sum(ordersum)
+    total_price = 0
+    for item in orderlist:
+        drink_name = item["drink"]
+        base_price = coffee_recipes[drink_name]["price"]
+        total_price += base_price
+        extras_list = item["extras"]
+        for extra in extras_list:
+            price_per_serving = extra_ingredients[extra] * ingredient_prices[extra]
+            total_price += price_per_serving
+    return total_price
 def add_extras(drink_choice_clean):
-    dowant = input("Бажаєте додати щось з додаткових інгредієнтів? (Введіть Так або Ні) ")
-    dowant_clear = dowant.strip().lower()
-    if "exit" in dowant_clear:
-        return "exit"
-    elif "Ні" in dowant_clear:
-        return False
     available_extras = list(extra_ingredients.keys())
     selected = []
     print(f"\n--- Додаткові інгредієнти для {drink_choice_clean} ---")
-    print(f"Доступно: {", ".join(list(extra_ingredients.keys()))}")
+    counter = 1
+    for extra in available_extras:
+        price_per_serving = extra_ingredients[extra] * ingredient_prices[extra]
+        print(f"{counter}) {extra} — {price_per_serving:.2f} грн")
+        counter += 1
+    print("-" * 35)
     while True:
         choice_exstras = input("Введіть вибрану вами добавку, або done для продовження без неї: ").strip().lower()
         if choice_exstras == "done":
