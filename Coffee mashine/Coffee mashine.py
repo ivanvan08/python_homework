@@ -135,14 +135,22 @@ def mein():
                 drink_choice = drink_choose()
                 drink_choice_clean = drink_choice.strip().lower()
                 if drink_choice_clean == "exit":
-                    break
+                    return
                 elif drink_choice_clean == "finish":
                     print("Ви закінчили заповнювати замовлення")
                     print(f"Ось ваше замовлення - {order_list}: {int(calculate_order(order_list))}грн")
                     break
                 elif drink_choice_clean in coffee_recipes:
-                    order_list.append(drink_choice_clean)
-                    print(f"ось ваше замовлення{order_list}, бажаєте щось ще?")
+                    extras = add_extras(drink_choice_clean)
+                    if extras == "exit":
+                        return
+                    order_list.append({"drink": drink_choice_clean, "extras": extras})
+                    if extras:
+                        print(f"✅ Додано: {drink_choice_clean} + {', '.join(extras)}")
+                    else:
+                        print("без додатків до замовлення")
+                else:
+                    print("Спробуйте ще")
         else:
             print("Спробуйте ще")
 
@@ -187,4 +195,25 @@ def calculate_order(orderlist):
     for option in orderlist:
         ordersum.append(coffee_recipes[option]["price"])
     return sum(ordersum)
+def add_extras(drink_choice_clean):
+    dowant = input("Бажаєте додати щось з додаткових інгредієнтів? (Введіть Так або Ні) ")
+    dowant_clear = dowant.strip().lower()
+    if "exit" in dowant_clear:
+        return "exit"
+    elif "Ні" in dowant_clear:
+        return False
+    available_extras = list(extra_ingredients.keys())
+    selected = []
+    print(f"\n--- Додаткові інгредієнти для {drink_choice_clean} ---")
+    print(f"Доступно: {", ".join(list(extra_ingredients.keys()))}")
+    while True:
+        choice_exstras = input("Введіть вибрану вами добавку, або done для продовження без неї: ").strip().lower()
+        if choice_exstras == "done":
+            return selected
+        elif choice_exstras == "exit":
+            return "exit"
+        elif choice_exstras in extra_ingredients:
+            selected.append(choice_exstras)
+            print(f"Додано {choice_exstras}")
+        else: print("Невірний ввід. Сробуйде ще або введіть done для виходу")
 mein()
