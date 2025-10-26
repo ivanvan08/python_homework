@@ -102,7 +102,25 @@ ingredient_prices = {
     "ice": 0.1,
     "whiskey": 2.5,
     "cream": 0.9,
-    "sugar": 0.15
+    "sugar": 0.15,
+    "vanilla_syrup": 0.5,
+    "caramel_syrup": 0.6,
+    "hazelnut_syrup": 0.7,
+    "coconut_syrup": 0.75,
+    "marshmallow": 0.7,
+    "cinnamon": 0.2,
+    "whipped_cream": 1.0,
+    "chocolate_chips": 0.8
+}
+extra_ingredients = {
+    "vanilla_syrup": 10,
+    "caramel_syrup": 10,
+    "hazelnut_syrup": 10,
+    "coconut_syrup": 10,
+    "marshmallow": 5,
+    "cinnamon": 2,
+    "whipped_cream": 20,
+    "chocolate_chips": 5
 }
 def mein():
     order_list = []
