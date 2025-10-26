@@ -137,8 +137,15 @@ def mein():
                 if drink_choice_clean == "exit":
                     return
                 elif drink_choice_clean == "finish":
+                    total_amount = round(calculate_order(order_list))
                     print("Ви закінчили заповнювати замовлення")
-                    print(f"Ось ваше замовлення - {order_list}: {int(calculate_order(order_list))}грн")
+                    cash_or_card = input(f"Ось ваше замовлення - {order_list}: {total_amount}грн. Бажаєте оплатити картою чи готівкою? (Введіть Картка або Готівка)")
+                    if cash_or_card.strip().lower() == "Готівка":
+                        cash_amount = int(input("Введіть внесену вами суму"))
+                        remainder = cash_amount-total_amount
+                        print("Ось ваша решта", remainder)
+                    if cash_or_card.strip().lower() == "Картка":
+                        print("Дякую за користування нашою кавомашиною")
                     break
                 elif drink_choice_clean in coffee_recipes:
                     extras = add_extras(drink_choice_clean)
