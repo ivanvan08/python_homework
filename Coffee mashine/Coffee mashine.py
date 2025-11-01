@@ -137,14 +137,25 @@ def mein():
                 if drink_choice_clean == "exit":
                     return
                 elif drink_choice_clean == "finish":
-                    total_amount = round(calculate_order(order_list))
+                    if len(order_list) == 0:
+                        print("Ваше замовлення порожнє, додайте напій!")
+                        break
+                    total_amount = float(calculate_order(order_list))
+                    tips = input(f"ось ціна вашого замовлення {total_amount}, бажаєте залишити чайові? (введіть Так або Ні) ")
+                    if tips.lower().strip() == "так":
+                        tips_amount = float(input("Введіть кількість чайових в відсотках"))
+                        end_amount = total_amount+(total_amount*(tips_amount*0.01))
+                    elif tips.lower().strip() == "ні":
+                        end_amount = total_amount
+                        print("Обов'язково напишіть відгук щоб ми могли стати краще")
+                    else: end_amount = total_amount
                     print("Ви закінчили заповнювати замовлення")
-                    cash_or_card = input(f"Ось ваше замовлення - {order_list}: {total_amount}грн. Бажаєте оплатити картою чи готівкою? (Введіть Картка або Готівка)")
-                    if cash_or_card.strip().lower() == "Готівка":
-                        cash_amount = int(input("Введіть внесену вами суму"))
-                        remainder = cash_amount-total_amount
-                        print("Ось ваша решта", remainder)
-                    if cash_or_card.strip().lower() == "Картка":
+                    cash_or_card = input(f"Ось ваше замовлення - {order_list}: {end_amount}грн. Бажаєте оплатити картою чи готівкою? (Введіть Картка або Готівка) ")
+                    if cash_or_card.strip().lower() == "готівка":
+                        cash_amount = float(input("Введіть внесену вами суму"))
+                        remainder = cash_amount-end_amount
+                        print(f"Ось ваша решта {remainder:.2f}")
+                    if cash_or_card.strip().lower() == "картка":
                         print("Дякую за користування нашою кавомашиною")
                     break
                 elif drink_choice_clean in coffee_recipes:
@@ -219,13 +230,13 @@ def add_extras(drink_choice_clean):
         counter += 1
     print("-" * 35)
     while True:
-        choice_exstras = input("Введіть вибрану вами добавку, або done для продовження без неї: ").strip().lower()
-        if choice_exstras == "done":
+        choice_extras = input("Введіть вибрану вами добавку, або done для продовження без неї: ").strip().lower()
+        if choice_extras == "done":
             return selected
-        elif choice_exstras == "exit":
+        elif choice_extras == "exit":
             return "exit"
-        elif choice_exstras in extra_ingredients:
-            selected.append(choice_exstras)
-            print(f"Додано {choice_exstras}")
+        elif choice_extras in extra_ingredients:
+            selected.append(choice_extras)
+            print(f"Додано {choice_extras}")
         else: print("Невірний ввід. Сробуйде ще або введіть done для виходу")
 mein()
