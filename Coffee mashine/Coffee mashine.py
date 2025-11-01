@@ -1,3 +1,15 @@
+import datetime
+def load_prices(filename):
+    recipe_dict = {}
+    with open(filename, 'r') as file:
+        for line in file:
+            if line.strip():
+                splited_line = line.lower().split().strip()
+                if len(splited_line) >= 2:
+                    name = splited_line[0]
+                    price = splited_line[1]
+                    recipe_dict[name] = price
+    return recipe_dict
 coffee_recipes = { # рецепти написані за допомогою ШІ, бо мені ліньки шукати скільки в якому напої міліграм й тд.
     "espresso": {
         "ingredients": {
