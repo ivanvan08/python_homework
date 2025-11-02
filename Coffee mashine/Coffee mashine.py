@@ -1,13 +1,22 @@
 import datetime
+def log_sale(order_list, amount):
+    order_names = []
+    for objkt in order_list:
+        order_names.append(objkt["drink"])
+    order_names_str = ", ".join(order_names)
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = f"[{now}] | SALE | {amount:.2f} | {order_names_str}\n"
+    with open("sales_log.txt", "a", encoding="utf-8") as file:
+        file.write(log_entry)
 def load_prices(filename):
     recipe_dict = {}
     with open(filename, 'r') as file:
         for line in file:
             if line.strip():
-                splited_line = line.lower().split().strip()
+                splited_line = line.lower().split()
                 if len(splited_line) >= 2:
                     name = splited_line[0]
-                    price = splited_line[1]
+                    price = float(splited_line[1])
                     recipe_dict[name] = price
     return recipe_dict
 coffee_recipes = { # рецепти написані за допомогою ШІ, бо мені ліньки шукати скільки в якому напої міліграм й тд.
@@ -102,29 +111,8 @@ coffee_recipes = { # рецепти написані за допомогою Ш�
         "price": 0
     }
 }
-ingredient_prices = {
-    "coffee": 0.6,
-    "water": 0.05,
-    "cold_water": 0.05,
-    "milk": 0.3,
-    "milk_foam": 0.35,
-    "instant_coffee": 0.5,
-    "chocolate_syrup": 0.8,
-    "ice_cream": 1.2,
-    "ice": 0.1,
-    "whiskey": 2.5,
-    "cream": 0.9,
-    "sugar": 0.15,
-    "vanilla_syrup": 0.5,
-    "caramel_syrup": 0.6,
-    "hazelnut_syrup": 0.7,
-    "coconut_syrup": 0.75,
-    "marshmallow": 0.7,
-    "cinnamon": 0.2,
-    "whipped_cream": 1.0,
-    "chocolate_chips": 0.8
-}
 extra_ingredients = {
+    "chocolate_syrup": 10,
     "vanilla_syrup": 10,
     "caramel_syrup": 10,
     "hazelnut_syrup": 10,
@@ -135,6 +123,10 @@ extra_ingredients = {
     "chocolate_chips": 5
 }
 def mein():
+    global ingredient_prices_dict
+    global extra_ingredients_dict
+    ingredient_prices_dict = load_prices("ingredient_prices.txt")
+    extra_ingredients_dict = load_prices("extra_prices.txt")
     order_list = []
     while True:
         action = hello_and_menu()
@@ -167,8 +159,10 @@ def mein():
                         cash_amount = float(input("Введіть внесену вами суму"))
                         remainder = cash_amount-end_amount
                         print(f"Ось ваша решта {remainder:.2f}")
+                        log_sale(order_list, end_amount)
                     if cash_or_card.strip().lower() == "картка":
                         print("Дякую за користування нашою кавомашиною")
+                        log_sale(order_list, end_amount)
                     break
                 elif drink_choice_clean in coffee_recipes:
                     extras = add_extras(drink_choice_clean)
@@ -189,8 +183,11 @@ def price_calculator():
         price_per_ingredient = []
         ingredients = coffee_recipes[drink]["ingredients"]
         for ingredient in ingredients:
-            price_per_ingredient.append(ingredients[ingredient] * ingredient_prices.get(ingredient))
-            # print(f"напій {drink} інгредієнт {ingredient} кількість {ingredients[ingredient]} ціна {ingredient_prices.get(ingredient)}")
+            price = ingredient_prices_dict.get(ingredient)
+            if price is None:
+                price = extra_ingredients_dict.get(ingredient, 0)
+            price_per_ingredient.append(ingredients[ingredient] * price)
+            # print(f"напій {drink} інгредієнт {ingredient} кількість {ingredients[ingredient]} ціна {ingredient_prices_dict.get(ingredient)}")
         total_price = sum(price_per_ingredient)
         coffee_recipes[drink]["price"]=total_price
         # print(coffee_recipes[drink]["price"])
@@ -228,7 +225,7 @@ def calculate_order(orderlist):
         total_price += base_price
         extras_list = item["extras"]
         for extra in extras_list:
-            price_per_serving = extra_ingredients[extra] * ingredient_prices[extra]
+            price_per_serving = extra_ingredients[extra] * extra_ingredients_dict[extra]
             total_price += price_per_serving
     return total_price
 def add_extras(drink_choice_clean):
@@ -237,7 +234,7 @@ def add_extras(drink_choice_clean):
     print(f"\n--- Додаткові інгредієнти для {drink_choice_clean} ---")
     counter = 1
     for extra in available_extras:
-        price_per_serving = extra_ingredients[extra] * ingredient_prices[extra]
+        price_per_serving = extra_ingredients[extra] * extra_ingredients_dict[extra]
         print(f"{counter}) {extra} — {price_per_serving:.2f} грн")
         counter += 1
     print("-" * 35)
@@ -247,7 +244,7 @@ def add_extras(drink_choice_clean):
             return selected
         elif choice_extras == "exit":
             return "exit"
-        elif choice_extras in extra_ingredients:
+        elif choice_extras in extra_ingredients_dict:
             selected.append(choice_extras)
             print(f"Додано {choice_extras}")
         else: print("Невірний ввід. Сробуйде ще або введіть done для виходу")
