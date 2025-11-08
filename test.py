@@ -1,0 +1,12 @@
+import numpy as np
+
+A = np.array([
+    [1, 2, 3, 4],
+    [2, 5, 8, 10],
+    [3, 7, 11, 0]
+])
+
+rank_A = np.linalg.matrix_rank(A)
+
+print(f"Матриця A:\n{A}")
+print(f"Ранг матриці A: {rank_A}")
