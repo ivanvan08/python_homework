@@ -1,9 +1,11 @@
-coffee 0.6
-water 0.05
-cold_water 0.05
-milk 0.3
-milk_foam 0.35
-instant_coffee 0.5
-ice 0.1
+3  coffee 0.6 4342
+water 0.05цйук
+
+cold_water йй 0.05 фівафіва
+milk       0.3
+
+22 milk_foam 0.35
+instant_coffee GARBAGE 0.5
+ice 0.1 {]
 cream 0.9
 sugar 0.15

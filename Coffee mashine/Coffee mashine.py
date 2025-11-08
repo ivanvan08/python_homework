@@ -11,7 +11,20 @@ def log_sale(order_list, amount):
 def load_prices(filename):
     recipe_dict = {}
     with open(filename, 'r') as file:
+        name = None
+        price = None
         for line in file:
+            parts = line.lower().split()
+            for part in parts:
+                try:
+                    value = float(part)
+                    if name is not None:
+                        price = value
+                        break
+                except ValueError:
+                    if name is None:
+                        name = part
+
             if line.strip():
                 splited_line = line.lower().split()
                 if len(splited_line) >= 2:
