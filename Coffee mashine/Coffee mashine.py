@@ -1,14 +1,28 @@
 import json
 import datetime
+
+
 def log_sale(order_list, amount):
     order_names = []
     for objkt in order_list:
         order_names.append(objkt["drink"])
-    order_names_str = ", ".join(order_names)
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    order_names_str = ", ".join(order_names)
+    sale_data = {
+        "timestamp": now,
+        "amount": amount,
+        "drinks": order_names
+    }
     log_entry = f"[{now}] | SALE | {amount:.2f} | {order_names_str}\n"
     with open("sales_log.txt", "a", encoding="utf-8") as file:
         file.write(log_entry)
+    try:
+        sales_list = load_sales_json("sales_log.json")
+        sales_list.append(sale_data)
+        with open("sales_log.json", "w", encoding="utf-8") as file:
+            json.dump(sales_list, file, indent=4)
+    except Exception as e:
+        print(f"Помилка при записі логу JSON: {e}")
 def load_sales_json(filename="sales_log.json"):
     try:
         with open(filename, "r", encoding="utf-8") as file:
@@ -170,16 +184,16 @@ def mein():
                     total_amount = float(calculate_order(order_list))
                     tips = input(f"ось ціна вашого замовлення {total_amount}, бажаєте залишити чайові? (введіть Так або Ні) ")
                     if tips.lower().strip() == "так":
-                        tips_amount = float(input("Введіть кількість чайових в відсотках"))
+                        tips_amount = float(input("Введіть кількість чайових в відсотках "))
                         end_amount = total_amount+(total_amount*(tips_amount*0.01))
                     elif tips.lower().strip() == "ні":
                         end_amount = total_amount
-                        print("Обов'язково напишіть відгук щоб ми могли стати краще")
+                        print("Обов'язково напишіть відгук щоб ми могли стати краще ")
                     else: end_amount = total_amount
                     print("Ви закінчили заповнювати замовлення")
-                    cash_or_card = input(f"Ось ваше замовлення - {order_list}: {end_amount}грн. Бажаєте оплатити картою чи готівкою? (Введіть Картка або Готівка) ")
+                    cash_or_card = input(f"Ось ваше замовлення - {order_list}: {round(end_amount, 2)}грн. Бажаєте оплатити картою чи готівкою? (Введіть Картка або Готівка) ")
                     if cash_or_card.strip().lower() == "готівка":
-                        cash_amount = float(input("Введіть внесену вами суму"))
+                        cash_amount = float(input("Введіть внесену вами суму "))
                         remainder = cash_amount-end_amount
                         print(f"Ось ваша решта {remainder:.2f}")
                         log_sale(order_list, end_amount)
