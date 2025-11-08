@@ -1,3 +1,4 @@
+import json
 import datetime
 def log_sale(order_list, amount):
     order_names = []
@@ -8,6 +9,12 @@ def log_sale(order_list, amount):
     log_entry = f"[{now}] | SALE | {amount:.2f} | {order_names_str}\n"
     with open("sales_log.txt", "a", encoding="utf-8") as file:
         file.write(log_entry)
+def load_sales_json(filename="sales_log.json"):
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
 def load_prices(filename):
     prices = {}
     try:
@@ -147,6 +154,8 @@ def mein():
         action_clean = action.strip().lower()
         if "exit" in action_clean:
             break
+        elif "2" in action_clean:
+            print(f"Заробіток за весь час = {get_total_sales(filename="seles_log.txt")}")
         elif action_clean == "1":
             menu_show()
             while True:
@@ -214,7 +223,7 @@ def menu_show():
         print(f"{counter}) {drink} — {int(coffee_recipes[drink]["price"])}грн")
 
 def hello_and_menu():
-    first_step = input("Вітаю, дякую що вибрали нашу кавомашину. Для перегляду меню введіть 1, для виходу введіть exit ")
+    first_step = input("Вітаю, дякую що вибрали нашу кавомашину. Для перегляду меню введіть 1, для перегляду заробітку за весь час введіть 2, для виходу введіть exit ")
     return first_step
 def drink_choose():
     while True:
@@ -262,4 +271,20 @@ def add_extras(drink_choice_clean):
             selected.append(choice_extras)
             print(f"Додано {choice_extras}")
         else: print("Невірний ввід. Сробуйде ще або введіть done для виходу")
+def get_total_sales(filename="sales_log.txt"):
+    try:
+        total_revenue = []
+        with open("sales_log.txt", "r", encoding="utf-8") as file:
+            for line in file:
+                if line:
+                    part = line.strip().split("|")
+                    if len(part) >= 3:
+                        try:
+                            total_revenue.append(float(part[2].strip()))
+                        except ValueError:
+                            pass
+    except FileNotFoundError:
+        print(f"Помилка: Файл логів '{filename}' не знайдено.")
+    return sum(total_revenue)
 mein()
+
