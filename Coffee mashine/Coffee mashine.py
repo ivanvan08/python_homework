@@ -9,29 +9,30 @@ def log_sale(order_list, amount):
     with open("sales_log.txt", "a", encoding="utf-8") as file:
         file.write(log_entry)
 def load_prices(filename):
-    recipe_dict = {}
-    with open(filename, 'r') as file:
-        name = None
-        price = None
-        for line in file:
-            parts = line.lower().split()
-            for part in parts:
-                try:
-                    value = float(part)
-                    if name is not None:
-                        price = value
-                        break
-                except ValueError:
-                    if name is None:
-                        name = part
-
-            if line.strip():
-                splited_line = line.lower().split()
-                if len(splited_line) >= 2:
-                    name = splited_line[0]
-                    price = float(splited_line[1])
-                    recipe_dict[name] = price
-    return recipe_dict
+    prices = {}
+    try:
+        with open(filename, 'r', encoding='utf-8') as file:
+            for line in file:
+                line = line.strip().lower()
+                if not line or line.startswith('#'):
+                    continue
+                parts = line.split()
+                name = None
+                price = None
+                for part in parts:
+                    try:
+                        value = float(part)
+                        if name is not None:
+                            price = value
+                            break
+                    except ValueError:
+                        if name is None:
+                            name = part
+                if name is not None and price is not None:
+                    prices[name] = price
+    except FileNotFoundError:
+        print(f"Помилка: Файл {filename} не знайдено. Переконайтеся, що він існує.")
+    return prices
 coffee_recipes = { # рецепти написані за допомогою ШІ, бо мені ліньки шукати скільки в якому напої міліграм й тд.
     "espresso": {
         "ingredients": {
