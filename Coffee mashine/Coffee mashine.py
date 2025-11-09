@@ -1,6 +1,6 @@
 import json
 import datetime
-
+import matplotlib.pyplot as plt
 
 def log_sale(order_list, amount):
     order_names = []
@@ -170,6 +170,8 @@ def mein():
             break
         elif "2" in action_clean:
             print(f"Заробіток за весь час = {get_total_sales(filename="seles_log.txt")}")
+        elif "3" in action_clean:
+            generate_sales_report_graph()
         elif action_clean == "1":
             menu_show()
             while True:
@@ -237,7 +239,7 @@ def menu_show():
         print(f"{counter}) {drink} — {int(coffee_recipes[drink]["price"])}грн")
 
 def hello_and_menu():
-    first_step = input("Вітаю, дякую що вибрали нашу кавомашину. Для перегляду меню введіть 1, для перегляду заробітку за весь час введіть 2, для виходу введіть exit ")
+    first_step = input("Вітаю, дякую що вибрали нашу кавомашину. Для перегляду меню введіть 1, для перегляду заробітку за весь час введіть 2, для перегляду графіку введіть 3, для виходу введіть exit ")
     return first_step
 def drink_choose():
     while True:
@@ -300,5 +302,21 @@ def get_total_sales(filename="sales_log.txt"):
     except FileNotFoundError:
         print(f"Помилка: Файл логів '{filename}' не знайдено.")
     return sum(total_revenue)
+def get_sales_by_date():
+    sales_list = load_sales_json("sales_log.json")
+    daily_revenue = {}
+    for sale in sales_list:
+        full_date = sale["timestamp"]
+        date = full_date.split(' ')[0]
+        sume = sale["amount"]
+        daily_revenue[date] = daily_revenue.get(date, 0) + sume
+    return list(daily_revenue.keys()), list(daily_revenue.values())
+def generate_sales_report_graph():
+    dates, revenues = get_sales_by_date()
+    plt.bar(dates, revenues)
+    plt.title("Дохід від продажів по днях")
+    plt.xlabel('Дата')
+    plt.ylabel('Дохід (грн)')
+    plt.show()
 mein()
 

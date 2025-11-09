@@ -1,3 +1,5 @@
 [2025-11-02 15:04:34] | SALE | 80.00 | cold_brew
 [2025-11-08 14:17:10] | SALE | 38.50 | turkish_coffee
 [2025-11-08 17:02:26] | SALE | 207.08 | mochaccino, cold_brew
+[2025-11-09 22:09:15] | SALE | 49.00 | frappe
+[2025-11-09 22:10:16] | SALE | 201.50 | affogato, turkish_coffee

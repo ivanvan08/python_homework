@@ -6,5 +6,20 @@
             "mochaccino",
             "cold_brew"
         ]
+    },
+    {
+        "timestamp": "2025-11-09 22:09:15",
+        "amount": 49.0,
+        "drinks": [
+            "frappe"
+        ]
+    },
+    {
+        "timestamp": "2025-11-09 22:10:16",
+        "amount": 201.5,
+        "drinks": [
+            "affogato",
+            "turkish_coffee"
+        ]
     }
 ]
