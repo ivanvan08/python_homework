@@ -7,8 +7,8 @@ def calc_levels(k: int):
     lvl1_a = fix_zero(k % 37, 37)
     lvl1_b = fix_zero((k + 19) % 37, 37)
 
-    lvl2_a = fix_zero(k % 17, 17)
-    lvl2_b = fix_zero((k + 9) % 17, 17)
+    lvl2_a = fix_zero(k % 16, 16)
+    lvl2_b = fix_zero((k + 9) % 16, 16)
 
     lvl3_a = fix_zero(k % 11, 11)
     lvl3_b = fix_zero((k + 6) % 11, 11)
@@ -21,8 +21,8 @@ def calc_levels(k: int):
             "(k + 19) mod 37": lvl1_b
         },
         "Nivel 2": {
-            "k mod 17": lvl2_a,
-            "(k + 9) mod 17": lvl2_b
+            "k mod 16": lvl2_a,
+            "(k + 9) mod 16": lvl2_b
         },
         "Nivel 3": {
             "k mod 11": lvl3_a,
@@ -35,7 +35,6 @@ def calc_levels(k: int):
     return result
 
 
-# Приклад використання
 variant = int(input("Введіть номер варіанту k: "))
 output = calc_levels(variant)
 
