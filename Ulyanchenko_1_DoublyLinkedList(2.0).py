@@ -33,21 +33,40 @@ class DoublyLinkedList:
         :param data:
         :return:
         """
-        pass
+        new_node = Node(data)
+        if self.tail_node is None:
+            self.head_node = new_node
+            self.tail_node = new_node
+        else:
+            new_node.prev = self.tail_node
+            self.tail_node.next = new_node
+            self.tail_node = new_node
+        self._size += 1
 
     def remove_head(self):
         """
         remove first node of linked list
         :return:
         """
-        pass
+        if self.tail_node is None:
+            return None
+        first_node_data = self.head_node.data
+        if self.head_node == self.tail_node:
+            self.head_node = None
+            self.tail_node = None
+            self._size -= 1
+            return first_node_data
+        self.head_node = self.head_node.next
+        self.head_node.prev.next = None
+        self.head_node.prev = None
+        self._size -= 1
+        return first_node_data
 
     def remove_tail(self):
         """
         remove last node of linked list
         :return:
         """
-
         if self.tail_node is None:
             return None
         last_node_data = self.tail_node.data
@@ -85,7 +104,9 @@ class DoublyLinkedList:
         print(output)
 
 
-
+class Stack:
+    def __init__(self):
+        self.conteiner
 
 
 if __name__ == '__main__':
