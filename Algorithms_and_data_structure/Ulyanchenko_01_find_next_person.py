@@ -67,13 +67,13 @@ PERSON_LIST = [
 
 
 def binary_search(data, target, low, high):
+    mid = (low + high) // 2
     while low <= high:
-        mid = (low + high) // 2
         if data[mid] == target:  # if mid-alphabet simbol equal to first word simbol we check - TRUE
             if mid < len(data) - 1:
                 return data[mid + 1]
             return None
-        elif data[mid] < target: # if mid-alphabet simbol has smoler index than first word simbol -
+        elif data[mid] < target:  # if mid-alphabet simbol has smoler index than first word simbol -
             low = mid + 1
         else:
             high = mid - 1
@@ -82,15 +82,21 @@ def binary_search(data, target, low, high):
 
 def find_next_person(name: str) -> Optional[str]:
     """
-    TODO: explain here how does your function works.
+    TODO: I chose to use binary search, couse I found out how to use it in 3SUM task. I think that this task may work
+    TODO: faster if we'll use dict with key of ПІБ and value of next person (speed must be O(1)). Also I could use some
+    TODO: mods for binary search, like interpolation. We have 33 letters and if code ll have second letter, it will
+    TODO: create a proportion (2 to 33 apon searchable index to len(data) - 1) and start main cycle from guessed index.
+    TODO: So, my binary search uses - data (list in which we contain names to search), target (name which we comparing
+    TODO: to find next one), low and high (fist and last index of data to search from and to, now, when I'm thinking
+    TODO: about this, I shouldn't relly add low, couse in this particular task we anyway should check out all).
+    TODO: In infinite loop
     TODO: Please, mention its complexity
     :param name: name of the person
     :return: name of the person next of the provided person in the PERSON_LIST.
     If there is no next person, the function returns None
     """
     # TODO: implement this function
-    l_name = name.split()
-    for word in l_name:
+    return binary_search(PERSON_LIST, name, 0, len(PERSON_LIST) - 1)
 
 
 if __name__ == '__main__':
