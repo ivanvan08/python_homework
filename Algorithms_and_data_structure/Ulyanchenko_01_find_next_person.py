@@ -64,20 +64,20 @@ PERSON_LIST = [
     'Яковенко Валерій Артемович',
     'Ярошенко Владислав Іванович',
 ]
-ALPHABET = ["а", "б", "в", "г", "ґ", "д", "е", "є", "ж", "з", "и", "і", "ї", "й", "к", "л",
-            "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ь", "ю", "я"]
 
 
 def binary_search(data, target, low, high):
     while low <= high:
         mid = (low + high) // 2
         if data[mid] == target:  # if mid-alphabet simbol equal to first word simbol we check - TRUE
-            return True
+            if mid < len(data) - 1:
+                return data[mid + 1]
+            return None
         elif data[mid] < target: # if mid-alphabet simbol has smoler index than first word simbol -
             low = mid + 1
         else:
             high = mid - 1
-    return False
+    return None
 
 
 def find_next_person(name: str) -> Optional[str]:
