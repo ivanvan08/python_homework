@@ -69,11 +69,11 @@ PERSON_LIST = [
 def binary_search(data, target, low, high):
     mid = (low + high) // 2
     while low <= high:
-        if data[mid] == target:  # if mid-alphabet simbol equal to first word simbol we check - TRUE
+        if data[mid] == target:
             if mid < len(data) - 1:
                 return data[mid + 1]
             return None
-        elif data[mid] < target:  # if mid-alphabet simbol has smoler index than first word simbol -
+        elif data[mid] < target:
             low = mid + 1
         else:
             high = mid - 1
@@ -89,13 +89,22 @@ def find_next_person(name: str) -> Optional[str]:
     TODO: So, my binary search uses - data (list in which we contain names to search), target (name which we comparing
     TODO: to find next one), low and high (fist and last index of data to search from and to, now, when I'm thinking
     TODO: about this, I shouldn't relly add low, couse in this particular task we anyway should check out all).
-    TODO: In infinite loop
-    TODO: Please, mention its complexity
+    TODO: Calculating middle value. In infinite loop if current name (in first run middle) equal name we have and if
+    TODO: this name index smaller than last index of our list (so next name exists) - it return next name. If there no
+    TODO: next name or there are no name in list - return None (as in struction). Other part - default binary search
+    TODO: skript. If the word has lower latter order in alphabet meaning compare to ours - we'll not consider the
+    TODO: first part of the list (in fist run, and the first part of the part that left after few cycles after the first
+    TODO: run) and ll made one more run. And if word has higher letter - we'll not consider the second part (everything
+    TODO: else will be like in situation with lower latter order). Then I just call function inside find_next_person and
+    TODO: return the result
+
+    TODO: In my method it'll be O(log n) and with interpolation mode - idn (faster, but i dont know the functioo). Im
+    TODO: too brain-dead to find it out rn, but will now it before next class
     :param name: name of the person
     :return: name of the person next of the provided person in the PERSON_LIST.
     If there is no next person, the function returns None
     """
-    # TODO: implement this function
+    # TODO: implement this function - done
     return binary_search(PERSON_LIST, name, 0, len(PERSON_LIST) - 1)
 
 
