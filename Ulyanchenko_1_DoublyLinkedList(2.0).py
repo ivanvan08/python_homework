@@ -81,9 +81,6 @@ class DoublyLinkedList:
         self._size -= 1
         return last_node_data
 
-
-
-
     def size(self) -> int:
         """
         return size of linked list
@@ -106,14 +103,66 @@ class DoublyLinkedList:
 
 class Stack:
     def __init__(self):
-        self.conteiner
+        self.container = DoublyLinkedList()
+
+    def empty(self):
+        if self.container.size() == 0:
+            return True
+        return False
+
+    def size(self):
+        return self.container.size()
+
+    def top(self):
+        if self.container.tail_node:
+            return self.container.tail_node.data
+        return None
+
+    def push(self, data):
+        self.container.insert_to_end(data)
+
+    def pop(self):
+        return self.container.remove_tail()
+
+    def __iter__(self):
+        current = self.container.tail_node
+        while current:
+            yield current.data
+            # must be waiting here before next step
+            current = current.prev
+
+
+class Queue:
+    def __init__(self):
+        self.container = DoublyLinkedList()
+
+    def is_empty(self):
+        if self.container.size() == 0:
+            return True
+        return False
+
+    def size(self):
+        return self.container.size()
+
+    def enqueue(self, data):
+        self.container.insert_to_end(data)
+
+    def dequeue(self):
+        return self.container.remove_head()
+
+    def __iter__(self):
+        current = self.container.head_node
+        while current:
+            yield current.data
+            # must be waiting here before next step
+            current = current.next
 
 
 if __name__ == '__main__':
     doubly_linked_list = DoublyLinkedList()
 
-    # doubly_linked_list.insert_to_end('a')
-    # doubly_linked_list.insert_to_end('b')
+    doubly_linked_list.insert_to_end('a')
+    doubly_linked_list.insert_to_end('b')
     doubly_linked_list.insert_to_start('c')
     doubly_linked_list.insert_to_start('abc')
     doubly_linked_list.insert_to_start(32)
@@ -121,14 +170,14 @@ if __name__ == '__main__':
     doubly_linked_list.insert_to_start((['a'], 12))
     doubly_linked_list.show()
     print(doubly_linked_list.size())
-    # doubly_linked_list.insert_to_end('d')
-    #
-    # print("Node Data")
-    # doubly_linked_list.show()
-    #
-    # print("Remove First Node")
-    # doubly_linked_list.remove_head()
-    # print("Remove Last Node")
+    doubly_linked_list.insert_to_end('d')
+
+    print("Node Data")
+    doubly_linked_list.show()
+
+    print("Remove First Node")
+    doubly_linked_list.remove_head()
+    print("Remove Last Node")
     doubly_linked_list.remove_tail()
     doubly_linked_list.show()
     doubly_linked_list.remove_tail()
@@ -140,8 +189,8 @@ if __name__ == '__main__':
     doubly_linked_list.remove_tail()
     doubly_linked_list.show()
 
-    # print("Linked list after removing a node:")
-    # doubly_linked_list.show()
-    #
-    # print("Size of linked list :", end=" ")
-    # print(doubly_linked_list.size())
+    print("Linked list after removing a node:")
+    doubly_linked_list.show()
+
+    print("Size of linked list :", end=" ")
+    print(doubly_linked_list.size())
