@@ -98,10 +98,8 @@ def find_next_person(name: str) -> Optional[str]:
     TODO: else will be like in situation with lower latter order). Then I just call function inside find_next_person and
     TODO: return the result
 
-    TODO: In my method it'll be O(log n) and with interpolation mode - idn (faster, but i dont know the function). Im
+    TODO: In my method it'll be O(log n) and with interpolation mode - idn (faster, but i dont know the functioo). Im
     TODO: too brain-dead to find it out rn, but will now it before next class
-
-    TODO: I can send u link to my repo on git (there are commits for this task and for 2 other ones that wasn't to send)
     :param name: name of the person
     :return: name of the person next of the provided person in the PERSON_LIST.
     If there is no next person, the function returns None
