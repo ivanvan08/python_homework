@@ -18,7 +18,6 @@ class DoublyLinkedList:
         """
         pass
 
-
     def insert_to_end(self, data):
         """
         add a node at the end of linked-list
