@@ -68,7 +68,7 @@ PERSON_LIST = [
 
 def binary_search(data, target, low, high):
     while low <= high:
-        mid = (low + high) // 2
+        mid = (low + high) // 2  # was out of cycle
         if data[mid] == target:
             if mid < len(data) - 1:
                 return data[mid + 1]
