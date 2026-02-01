@@ -1,6 +1,6 @@
 import random
-from Algorithms_and_data_structure.SelectionSort import selection_sort
-from Algorithms_and_data_structure.InsertionSort import insertion_sort
+from Algorithms_and_data_structure.second_practice.insertion_sort import insertion_sort
+from Algorithms_and_data_structure.second_practice.selection_sort import selection_sort
 
 import time
 
