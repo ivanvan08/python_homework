@@ -14,7 +14,7 @@ def is_partly_sorted(arr, multiplier):
 
 
 if __name__ == "__main__":
-    arr = [8, 4, 2, 1]
+    arr = [3, 4, 2, 1, 5, 6, 0]
     inv = inversion(arr)
     print(f"Список - {arr}\nІнверсії: {inv}")
     print(f"Частково впорядкований (коеф. - 2) - {is_partly_sorted(arr, 2)}")
