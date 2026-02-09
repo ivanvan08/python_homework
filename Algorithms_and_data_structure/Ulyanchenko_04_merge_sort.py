@@ -1,7 +1,11 @@
 """
 # https://www.geeksforgeeks.org/python-program-for-merge-sort/ (by Mohit Kumra)
 """
+import time
+
 from second_practice.insertion_sort import insertion_sort
+from second_practice.Ulyanchenko_03_Knut import sorted_elements, simple_shuffling
+from second_practice.practice_2 import partly_sorted_elements
 
 
 def merge(arr, lo, mid, hi):
@@ -70,13 +74,37 @@ def merge_sort(arr, lo, hi):
 
 
 if __name__ == '__main__':
-    data = [12, 11, 13, 5, 6, 7]
-    print('Given array is')
-    print(data)
+    size_for_merge = 1000
+    size_for_insertion = 7
+    sorted_merge = sorted_elements(size_for_merge)
+    sorted_insertion = sorted_elements(size_for_insertion)
+    shuffled_merge = simple_shuffling(sorted_elements(size_for_merge))
+    shuffled_insertion = simple_shuffling(sorted_elements(size_for_insertion))
+    partly_sorted_merge = partly_sorted_elements(size_for_merge)
+    partly_sorted_insertion = partly_sorted_elements(size_for_insertion)
 
-    print('\n\n')
+    # при оцінці часу сортування зважайте на "e-" в кінці, будь ласка
 
-    n = len(data)
-    merge_sort(data, 0, n - 1)
-    print('Sorted array is')
-    print(data)
+    start = time.time()
+    merge_sort(sorted_merge, 0, size_for_merge - 1)
+    print(f"sorted 1000 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort(sorted_insertion, 0, size_for_insertion - 1)
+    print(f"sorted 7 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort(shuffled_merge, 0, size_for_merge - 1)
+    print(f"shuffled 1000 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort(shuffled_insertion, 0, size_for_insertion - 1)
+    print(f"shuffled 7 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort(partly_sorted_merge, 0, size_for_merge - 1)
+    print(f"partly shuffled 1000 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort(partly_sorted_insertion, 0, size_for_insertion - 1)
+    print(f"partly shuffled 7 elements: {time.time() - start}")
