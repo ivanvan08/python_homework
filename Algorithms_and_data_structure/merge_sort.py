@@ -1,6 +1,7 @@
 """
 # https://www.geeksforgeeks.org/python-program-for-merge-sort/ (by Mohit Kumra)
 """
+from second_practice.insertion_sort import insertion_sort
 
 
 def merge(arr, lo, mid, hi):
@@ -54,6 +55,9 @@ def merge_sort(arr, lo, hi):
     :return: 
     """
     if lo < hi:
+        if hi - lo + 1 <= 7:  # +1 in case of index
+            insertion_sort(arr, lo, hi)
+            return
         # Same as (l_ind + r_ind) // 2, but avoids overflow for large l_ind and r_ind
         mid = lo + (hi - lo) // 2
 
