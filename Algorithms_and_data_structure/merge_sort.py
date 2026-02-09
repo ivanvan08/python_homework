@@ -60,6 +60,8 @@ def merge_sort(arr, lo, hi):
         # Sort first and second halves
         merge_sort(arr, lo, mid)
         merge_sort(arr, mid + 1, hi)
+        if arr[mid] <= arr[mid + 1]:
+            return
         merge(arr, lo, mid, hi)
 
 
@@ -74,4 +76,3 @@ if __name__ == '__main__':
     merge_sort(data, 0, n - 1)
     print('Sorted array is')
     print(data)
-
