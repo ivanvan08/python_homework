@@ -1,5 +1,8 @@
 """
 # https://www.geeksforgeeks.org/python-program-for-merge-sort/ (by Mohit Kumra)
+
+# не можу надіслати більше 1 файлу на дістеду, тому залишаю посилання на свій гітхаб (завантажте всью папку)
+# https://github.com/ivanvan08/python_homework/tree/master/Algorithms_and_data_structure/second_practice
 """
 import time
 
@@ -49,6 +52,14 @@ def merge(arr, lo, mid, hi):
         arr[k] = right[j]
         j += 1
         k += 1
+
+
+def merge_sort_standard(arr, lo, hi):
+    if lo < hi:
+        mid = lo + (hi - lo) // 2
+        merge_sort_standard(arr, lo, mid)
+        merge_sort_standard(arr, mid + 1, hi)
+        merge(arr, lo, mid, hi)
 
 
 def merge_sort(arr, lo, hi):
@@ -107,4 +118,36 @@ if __name__ == '__main__':
 
     start = time.time()
     merge_sort(partly_sorted_insertion, 0, size_for_insertion - 1)
-    print(f"partly shuffled 7 elements: {time.time() - start}")
+    print(f"partly shuffled 7 elements: {time.time() - start}\n")
+    print(f"Standard merge\n")
+
+    sorted_merge = sorted_elements(size_for_merge)
+    sorted_insertion = sorted_elements(size_for_insertion)
+    shuffled_merge = simple_shuffling(sorted_elements(size_for_merge))
+    shuffled_insertion = simple_shuffling(sorted_elements(size_for_insertion))
+    partly_sorted_merge = partly_sorted_elements(size_for_merge)
+    partly_sorted_insertion = partly_sorted_elements(size_for_insertion)
+
+    start = time.time()
+    merge_sort_standard(sorted_merge, 0, size_for_merge - 1)
+    print(f"standard sorted 1000 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort_standard(sorted_insertion, 0, size_for_insertion - 1)
+    print(f"standard sorted 7 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort_standard(shuffled_merge, 0, size_for_merge - 1)
+    print(f"standard shuffled 1000 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort_standard(shuffled_insertion, 0, size_for_insertion - 1)
+    print(f"standard shuffled 7 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort_standard(partly_sorted_merge, 0, size_for_merge - 1)
+    print(f"standard partly shuffled 1000 elements: {time.time() - start}")
+
+    start = time.time()
+    merge_sort_standard(partly_sorted_insertion, 0, size_for_insertion - 1)
+    print(f"standard partly shuffled 7 elements: {time.time() - start}")
