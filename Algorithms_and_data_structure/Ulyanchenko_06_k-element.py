@@ -35,6 +35,9 @@ def k_largest(arr, k):
 
 
 if __name__ == '__main__':
+    nums = [3, 2, 1, 5, 6, 4]
+    k = 2
+    print(k_largest(nums, k))
     nums = [3, 2, 3, 1, 2, 4, 5, 5, 6]
     k = 4
     print(k_largest(nums, k))
