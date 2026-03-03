@@ -47,6 +47,7 @@ class KeyValueBST:
                 current_node = current_node.right
             else:
                 return current_node.value
+        return None
 
     def delete(self, key):
         self._root = self._delete(self._root, key)
@@ -100,6 +101,7 @@ class KeyValueBST:
         """
         if lo is None and hi is None:
             return self._size(self._root)
+        return 0
 
     def _size(self, node):
         if node is None:
@@ -252,3 +254,74 @@ class KeyValueBST:
         node.right = self._delete_max(node.right)
         node.count = 1 + self._size(node.left) + self._size(node.right)
         return node
+
+
+if __name__ == '__main__':
+    """Я запитав gemini як краще протестувати цей код й він мені розказав про assert. 
+    Пишу, щоб сказати, що я не просто використав код нейронки, а розібрався в темі 
+    й написав повідомлення при помилках щоб було зручно дебажити"""
+    tree = KeyValueBST()
+    assert tree.is_empty(), "Дерево не порожнє"
+    assert tree.size() == 0, "Розмір дерева не 0"
+
+    tree.put(50, "П'ятдесят")
+    tree.put(30, "Тридцять")
+    tree.put(70, "Сімдесят")
+    tree.put(20, "Двадцять")
+    tree.put(40, "Сорок")
+    tree.put(60, "Шістдесят")
+    tree.put(80, "Вісімдесят")
+
+    assert not tree.is_empty(), "Дерево більше не порожнє"
+    assert tree.size() == 7, "Розмір має дорівнювати 7"
+    assert tree.get(50) == "П'ятдесят", \
+        "Метод get не знайшов існуючий ключ"
+    assert tree.get(100) is None, \
+        "Метод get має повертати None для неіснуючих ключів"
+    assert tree.contains(70), \
+        "contains має повертати True для існуючого ключа"
+    assert not tree.contains(99), \
+        "contains має повертати False для неіснуючого ключа"
+
+    assert tree.min() == 20, "Мінімальний ключ має бути 20"
+    assert tree.max() == 80, "Максимальний ключ має бути 80"
+
+    assert tree.floor(45) == 40, "Floor для 45 має бути 40"
+    assert tree.ceiling(45) == 50, "Ceiling для 45 має бути 50"
+    assert tree.floor(10) is None, \
+        "Floor для занадто малого числа має бути None"
+
+    assert tree.rank(50) == 3, \
+        "Кількість ключів, менших за 50, має дорівнювати 3 (це 20, 30, 40)"
+    assert tree.select(3) == 50, \
+        "Ключ під індексом 3 (4-й за розміром) має бути 50"
+
+    all_keys = tree.keys()
+    assert all_keys == [20, 30, 40, 50, 60, 70, 80], \
+        "keys() має повертати відсортований список"
+
+    range_keys = tree.keys(30, 60)
+    assert range_keys == [30, 40, 50, 60], \
+        "keys(lo, hi) має повертати правильний діапазон"
+
+    iterated_keys = [k for k in tree]
+    assert iterated_keys == all_keys, \
+        "Ітератор має повертати ключі в правильному порядку"
+
+    tree.delete_min()
+    assert tree.min() == 30, \
+        "Після delete_min новим мінімумом має бути 30"
+    assert tree.size() == 6, "Розмір має зменшитися на 1"
+
+    tree.delete_max()
+    assert tree.max() == 70, \
+        "Після delete_max новим максимумом має бути 70"
+
+    tree.delete(50)
+    assert tree.get(50) is None, "Ключ 50 має бути видалений"
+    assert tree.size() == 4, \
+        "Залишилося 4 елементи (30, 40, 60, 70)"
+    assert tree.keys() == [30, 40, 60, 70], \
+        "Дерево зберегло правильну структуру після видалення кореня"
+
+    print("Всі тести успішно пройдено")
