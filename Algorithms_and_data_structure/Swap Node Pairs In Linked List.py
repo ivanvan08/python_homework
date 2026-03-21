@@ -1,10 +1,26 @@
-public class Node {
-    private String value;
-    public Node next;
+class Node:
+    def __init__(self, next=None):
+        self.next = next
 
-    public Node(String value) { this.value = value; }
 
-    public String getValue() { return value; }
-  // returns a String representation of the whole list:
-    public String printList() {}
-}
+def swap_head(head):
+    if head is None:
+        return None
+    elif head.next is None:
+        return head
+    current = head
+    prev = current
+    counter = 1
+    while current is not None and current.next is not None:
+        second = current.next
+        if counter == 1:
+            our_head = second
+            counter = 0
+        prev.next = second
+        next_pair_first = second.next
+        current.next = next_pair_first
+        second.next = current
+        prev = current
+        current = current.next
+    return our_head
+
