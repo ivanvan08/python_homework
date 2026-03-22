@@ -71,7 +71,9 @@ class MyHashTable:
         """
         key_hash = self.hash_function(key)
         current_node = self.st[key_hash]
-        if current_node.key == key:
+        if current_node is None:
+            return None
+        elif current_node.key == key:
             self.st[key_hash] = current_node.next
             return None
         while current_node.next:
@@ -89,6 +91,7 @@ class MyHashTable:
         old_list = self.st
         self.slots *= 2
         self.st = [None] * self.slots
+        self.number_of_taken_slots = 0
         for i in old_list:
             if i:
                 while i.next:
