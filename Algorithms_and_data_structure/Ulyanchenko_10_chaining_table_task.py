@@ -27,13 +27,14 @@ class MyHashTable:
         :param value:
         :return:
         """
+        if self.number_of_taken_slots >= self.slots * self.load_factor:
+            self.rehashing()
         key_hash = self.hash_function(key)
         if self.st[key_hash] is None:
             node = ListNode(key, value)
             self.st[key_hash] = node
+            self.number_of_taken_slots += 1
             return node
-        # while self.st[key_hash] is not None:
-        #     key_hash += 1
         else:
             current_node = self.st[key_hash]
             while current_node:
@@ -53,6 +54,14 @@ class MyHashTable:
         :param key:
         :return:
         """
+        key_hash = self.hash_function(key)
+        current_node = self.st[key_hash]
+        while current_node:
+            if current_node.key == key:
+                return current_node.value
+            else:
+                current_node = current_node.next
+        return None
 
     def remove(self, key):
         """
@@ -60,13 +69,32 @@ class MyHashTable:
         :param key:
         :return:
         """
+        key_hash = self.hash_function(key)
+        current_node = self.st[key_hash]
+        if current_node.key == key:
+            self.st[key_hash] = current_node.next
+            return None
+        while current_node.next:
+            if current_node.next.key == key:
+                current_node.next = current_node.next.next
+            else:
+                current_node = current_node.next
+        return None
 
     def rehashing(self):
         """
         increase the slots number if load factor is high.
         :return:
         """
-        pass
+        old_list = self.st
+        self.slots *= 2
+        self.st = [None] * self.slots
+        for i in old_list:
+            if i:
+                while i.next:
+                    self.put(i.key, i.value)
+                    i = i.next
+                self.put(i.key, i.value)
 
 
 if __name__ == '__main__':
@@ -79,12 +107,12 @@ if __name__ == '__main__':
     obj.put("14", 22)
     obj.put("24", 2)
 
-    # print(obj)
-    # print(obj.get("1"))
-    # print(obj.get("14"))
-    # print(obj.get("24"))
-    #
-    # obj.remove("1")
-    # obj.remove("2")
-    # obj.remove("14")
-    # print(obj)
+    print(obj)
+    print(obj.get("1"))
+    print(obj.get("14"))
+    print(obj.get("24"))
+
+    obj.remove("1")
+    obj.remove("2")
+    obj.remove("14")
+    print(obj)
