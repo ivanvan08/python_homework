@@ -19,6 +19,22 @@ class MyHashTable:
         :param value:
         :return:
         """
+        hash_value = self.hash_function(key)
+        cells = self.head
+        obj = (key, value)
+        while True:
+            current_cell = cells[hash_value]
+            if current_cell is None:
+                self.head[hash_value] = obj
+                if sum(1 for cell in self.head if cell is not None) / self.slots >= self.load_factor:
+                    self.rehashing()
+                break
+            elif current_cell[0] == obj[0]:
+                self.head[hash_value] = obj
+                break
+            hash_value = (hash_value + 1) % self.slots
+            if sum(1 for cell in self.head if cell is not None)/self.slots >= self.load_factor:
+                self.rehashing()
 
     def get(self, key):
         """
