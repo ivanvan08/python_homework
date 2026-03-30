@@ -68,6 +68,7 @@ class Percolation:
         :param j: <int> column index
         :return: <bool> is cell opened
         """
+        return self.matrix[i][j]
 
     def percolates(self) -> bool:
         """
