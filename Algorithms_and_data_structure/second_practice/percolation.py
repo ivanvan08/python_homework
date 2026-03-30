@@ -26,10 +26,10 @@ class Percolation:
         parent_b = self._find(y)
         if self.size[parent_a] >= self.size[parent_b]:
             self.linked[parent_a] = parent_b
-            self.size[parent_a] += self.size[parent_b]
+            self.size[parent_b] += self.size[parent_a]
         else:
             self.linked[parent_b] = parent_a
-            self.size[parent_b] += self.size[parent_a]
+            self.size[parent_a] += self.size[parent_b]
         return True
 
     def opened_count(self) -> int:
