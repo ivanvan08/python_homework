@@ -64,10 +64,9 @@ class Percolation:
 
     def _pick_random(self):
         cell = random.randint(0, self.number - 1), random.randint(0, self.number - 1)
-        if not self.matrix[cell[0]][cell[1]]:
-            return cell
-        else:
-            return self._pick_random()
+        while self.matrix[cell[0]][cell[1]]:
+            cell = random.randint(0, self.number - 1), random.randint(0, self.number - 1)
+        return cell
 
     def is_opened(self, i: int, j: int) -> bool:
         """
