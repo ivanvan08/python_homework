@@ -24,7 +24,7 @@ class Percolation:
     def _union(self, x, y):
         parent_a = self._find(x)
         parent_b = self._find(y)
-        if self.size[parent_a] >= self.size[parent_b]:
+        if self.size[parent_a] < self.size[parent_b]:
             self.linked[parent_a] = parent_b
             self.size[parent_b] += self.size[parent_a]
         else:
