@@ -31,7 +31,7 @@ class Percolation:
         opened cells count
         :return: <int> opened cells count
         """
-        return sum([[1 for i in j if i is True] for j in self.matrix])
+        return self.count
 
     def open(self):
         """
