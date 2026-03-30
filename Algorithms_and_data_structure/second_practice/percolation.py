@@ -77,3 +77,6 @@ class Percolation:
         check if system percolates
         :return: <bool> percolates
         """
+        if self._find(self.top) == self._find(self.bottom):
+            return True
+        return False
