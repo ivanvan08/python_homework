@@ -12,6 +12,7 @@ class Percolation:
         self.top = number * number
         self.bottom = number * number + 1
         self.number = number
+        self.count = 0
 
     def _find(self, x):
         current = x
@@ -30,7 +31,7 @@ class Percolation:
         opened cells count
         :return: <int> opened cells count
         """
-        ...
+        return sum([[1 for i in j if i is True] for j in self.matrix])
 
     def open(self):
         """
@@ -53,6 +54,7 @@ class Percolation:
             if 0 <= n_i < self.number and 0 <= n_j < self.number:
                 if self.matrix[n_i][n_j] is True:
                     self._union(n_i * self.number + n_j, new_index)
+        self.count += 1
 
     def _pick_random(self):
         cell = random.randint(0, self.number - 1), random.randint(0, self.number - 1)
