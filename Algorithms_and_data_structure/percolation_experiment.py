@@ -1,3 +1,9 @@
+"""
+30/03/2026
+@author: Ulyanchenko Ivan
+"""
+# import time
+
 from percolation import Percolation
 
 
@@ -37,11 +43,17 @@ def main():
     run experiments and compute mean, std, confidence interval.
     print results on screen in readable format.
     """
-    exp = PercolationExperiment(200, 100)
+    # beginning = time.time()
+    n = 200
+    t = 100
+    exp = PercolationExperiment(n, t)
     mean = exp.mean()
     std = exp.std()
     confidence_interval = exp.confidence_interval()
-    print(f"""    середнє арифметичне: {mean}
+    # time_spend = time.time()-beginning
+    print(f"""    кількість стовпців і рядків в матриці: {n}
+    кількість експериментів: {t}
+    середнє арифметичне: {mean}
     стандартне відхилення: {std}
     кількість клітинок які треба відкрити (не в відсотках): {confidence_interval[0]*100, confidence_interval[1]*100}""")
 
