@@ -4,7 +4,7 @@
 """
 # import time
 
-from percolation import Percolation
+from Ulyanchenko_11_percolation import Percolation
 
 
 class PercolationExperiment:
