@@ -33,9 +33,9 @@ class Solution(object):
 if __name__ == "__main__":
     sol = Solution()
 
-    print(sol.validPath(3, [[0, 1], [1, 2], [2, 0]], 0, 2))
-    print(sol.validPath(1, [], 0, 0))
-    print(sol.validPath(6, [[0, 1], [0, 2], [3, 5], [5, 4], [4, 3]], 0, 5))
-    print(sol.validPath(5, [[0, 1], [1, 2]], 3, 3))
-    print(sol.validPath(5, [[0, 1], [1, 2], [2, 3], [3, 4]], 0, 4))
-    print(sol.validPath(3, [], 0, 2))
+    print(sol.validPath(3, [[0, 1], [1, 2], [2, 0]], 0, 2))  # True
+    print(sol.validPath(1, [], 0, 0))  # True
+    print(sol.validPath(6, [[0, 1], [0, 2], [3, 5], [5, 4], [4, 3]], 0, 5))  # False
+    print(sol.validPath(5, [[0, 1], [1, 2]], 3, 3))  # True
+    print(sol.validPath(5, [[0, 1], [1, 2], [2, 3], [3, 4]], 0, 4))  # True
+    print(sol.validPath(3, [], 0, 2))  # False
