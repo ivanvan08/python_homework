@@ -80,5 +80,3 @@ if __name__ == "__main__":
     print(f'degree 0: {graph.degree(0)}')
     print(graph)
     print(graph._edges_count)
-
-
