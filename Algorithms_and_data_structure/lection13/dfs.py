@@ -1,4 +1,4 @@
-import graph
+from lection13 import graph
 
 
 class DFS:
