@@ -2,7 +2,7 @@
 13/04/2026
 @author: Ulyanchenko Ivan
 """
-from lection13 import digraph, graph, dfs
+from lection13 import digraph, dfs
 
 
 def reverse(g):
@@ -42,7 +42,7 @@ def kosaradge(g):
             normal_dfs = dfs.DFS(g, v)
             scc = []
             for w in range(g.vertex_count()):
-                if normal_dfs.has_path_to(w):
+                if normal_dfs.has_path_to(w) and not marked[w]:
                     scc.append(w)
                     marked[w] = True
             result.append(scc)
